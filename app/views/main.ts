@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import {Router, NavigationExtras} from "@angular/router"; 
+import listViewModule = require("ui/list-view");
 
 import { Item } from "../models/items/item";
 
@@ -196,13 +197,9 @@ export class ViewComponent implements OnInit {
         let self = this;
         var temp_list : Array<any>;
         temp_list = self.word_list;
-
-
-        console.log("temp_list ===== > ",temp_list);
-        console.log("temp_list ===== > ",temp_list.length);
         
         for(var row in temp_list){
-            console.log(temp_list[row]);
+ 
 
             let model_item : Item = new Item();
 
@@ -210,13 +207,57 @@ export class ViewComponent implements OnInit {
             model_item.wordEng = temp_list[row][1];
             model_item.wordThai = temp_list[row][2];
 
-            console.log(temp_list[row][0] +" " + temp_list[row][1] +" " + temp_list[row][2] );
+            //console.log(temp_list[row][0] +" " + temp_list[row][1] +" " + temp_list[row][2] );
 
             self.word_list2.push(model_item);
             
         }
+
+    }
+
+
+
+   
+
+    getItemSelect(){
+        let self = this;
+        var search = self.word_search;
         
-       
+        var delPop = self.word_list2.length;
+        for (var i = 0 ; i < delPop ; i++){
+            self.word_list2.pop();
+        }
+
+        if (search == ""){
+            alert("มีช่องว่างนะไอ้โง่ .....");
+        }else{
+            console.log("Check ==> " , "Select ===> " + search);
+             var temp = "%"+search+"%";
+            
+            self.database.all("SELECT * FROM dict WHERE engWorld LIKE (?) or thaiWorld LIKE (?)",[temp,temp] ).then(rows =>{
+                if(rows ==""){
+                    console.log("not word ===>  " + rows + "is " + search);
+                    alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
+                }
+                
+                self.word_list = rows;
+                for(var row in rows){
+                  console.log(rows[row]);
+
+                    let model_item : Item = new Item();
+
+                    model_item.id = rows[row][0];
+                    model_item.wordEng = rows[row][1];
+                    model_item.wordThai = rows[row][2];
+
+                    console.log(rows[row][0] +" " + rows[row][1] +" " + rows[row][2] +"" );
+
+                    self.word_list2.push(model_item);
+                    }
+                },error =>{
+                    console.log("SELECT ERROR " , error);
+                })
+            }
 
     }
 

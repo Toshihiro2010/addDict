@@ -5,9 +5,9 @@
         <Button text="+" (tap)="btnInsert()" width="9.5%" class="btn-main-insert"></Button>
         <Button text="-" (tap)="btnDelete()" width="10%" class="btn-main-delete"></Button>
     </StackLayout>
-    <Button text="Search" (tap)="btnSelect()" ></Button>
+    <Button text="Search" (tap)="getItemSelect()" ></Button>
     <Label [text]="word_search"></Label>
-    <ListView [items]="word_list2"  (itemTap)="onItemTap($event)">
+    <ListView [items]="word_list2"  (itemTap)="onItemTap($event)" >
 		    <template let-item="item" let-i="index">
 	            <StackLayout orientation="horizontal" class="itemTemplate" > 
                     
