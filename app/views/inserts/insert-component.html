@@ -1,0 +1,12 @@
+<page-router-outlet>
+    <ActionBar title="Test Insert" > </ActionBar>
+    
+    <StackLayout orientation="vertical">
+        <TextField hint="English Word"  [(ngModel)]="eng_word" class="insert-text"></TextField>
+        <TextField hint="Thai Word" [(ngModel)]="thai_word" class="insert-text"></TextField>
+    
+        <Button text="add data" (tap)="btnInsert()" class="btn-insert"></Button>
+    
+
+    </StackLayout>
+</page-router-outlet>

@@ -1,0 +1,14 @@
+<page-router-outlet>
+    <ActionBar title="Test Delte" > </ActionBar>
+    <StackLayout orientation="vertical">
+        <TextField hint="English Word"  [(ngModel)]="eng_word" class="insert-text"></TextField>    
+        <Button text="ลบคำศัพท์" (tap)="btnDelete()" class="btn-insert"></Button>
+
+        <Button text="fetch" (tap)="fetch()" class="btn-insert"></Button>
+    
+
+    </StackLayout>
+
+    
+
+</page-router-outlet>

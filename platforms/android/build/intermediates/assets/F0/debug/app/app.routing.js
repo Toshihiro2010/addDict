@@ -1,0 +1,31 @@
+"use strict";
+var core_1 = require("@angular/core");
+var router_1 = require("nativescript-angular/router");
+var app_component_1 = require("./app.component");
+var main_1 = require("./views/main");
+var insert_component_1 = require("./views/inserts/insert-component");
+var delete_component_1 = require("./views/deletes/delete-component");
+var main_test_1 = require("./views/test/main-test");
+var login_component_1 = require("./views/setting/login/login-component");
+var routes = [
+    { path: "", redirectTo: "/login", pathMatch: "full" },
+    { path: "insert", component: insert_component_1.Inserts },
+    { path: "main", component: main_1.ViewComponent },
+    { path: "sample", component: app_component_1.AppComponent },
+    { path: "delete", component: delete_component_1.DeleteComponent },
+    { path: "view_test", component: main_test_1.ViewComponentTest },
+    { path: "login", component: login_component_1.LoginComponent }
+];
+var AppRoutingModule = (function () {
+    function AppRoutingModule() {
+    }
+    return AppRoutingModule;
+}());
+AppRoutingModule = __decorate([
+    core_1.NgModule({
+        imports: [router_1.NativeScriptRouterModule.forRoot(routes)],
+        exports: [router_1.NativeScriptRouterModule]
+    })
+], AppRoutingModule);
+exports.AppRoutingModule = AppRoutingModule;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLnJvdXRpbmcuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJhcHAucm91dGluZy50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUEsc0NBQXlDO0FBQ3pDLHNEQUF1RTtBQUl2RSxpREFBK0M7QUFDL0MscUNBQTZDO0FBQzdDLHFFQUEyRDtBQUMzRCxxRUFBbUU7QUFDbkUsb0RBQTJEO0FBQzNELHlFQUF1RTtBQUd2RSxJQUFNLE1BQU0sR0FBVztJQUNuQixFQUFFLElBQUksRUFBRSxFQUFFLEVBQUUsVUFBVSxFQUFFLFFBQVEsRUFBRSxTQUFTLEVBQUUsTUFBTSxFQUFFO0lBQ3JELEVBQUUsSUFBSSxFQUFFLFFBQVEsRUFBRyxTQUFTLEVBQUcsMEJBQU8sRUFBRTtJQUN4QyxFQUFFLElBQUksRUFBRSxNQUFNLEVBQUcsU0FBUyxFQUFHLG9CQUFhLEVBQUM7SUFDM0MsRUFBRSxJQUFJLEVBQUUsUUFBUSxFQUFHLFNBQVMsRUFBRyw0QkFBWSxFQUFDO0lBQzVDLEVBQUUsSUFBSSxFQUFFLFFBQVEsRUFBRyxTQUFTLEVBQUcsa0NBQWUsRUFBQztJQUMvQyxFQUFFLElBQUksRUFBRSxXQUFXLEVBQUcsU0FBUyxFQUFHLDZCQUFpQixFQUFDO0lBQ3BELEVBQUUsSUFBSSxFQUFFLE9BQU8sRUFBRyxTQUFTLEVBQUcsZ0NBQWMsRUFBQztDQUNoRCxDQUFDO0FBT0YsSUFBYSxnQkFBZ0I7SUFBN0I7SUFBZ0MsQ0FBQztJQUFELHVCQUFDO0FBQUQsQ0FBQyxBQUFqQyxJQUFpQztBQUFwQixnQkFBZ0I7SUFMNUIsZUFBUSxDQUFDO1FBQ04sT0FBTyxFQUFFLENBQUMsaUNBQXdCLENBQUMsT0FBTyxDQUFDLE1BQU0sQ0FBQyxDQUFDO1FBQ25ELE9BQU8sRUFBRSxDQUFDLGlDQUF3QixDQUFDO0tBQ3RDLENBQUM7R0FFVyxnQkFBZ0IsQ0FBSTtBQUFwQiw0Q0FBZ0IiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSB9IGZyb20gXCJAYW5ndWxhci9jb3JlXCI7XG5pbXBvcnQgeyBOYXRpdmVTY3JpcHRSb3V0ZXJNb2R1bGUgfSBmcm9tIFwibmF0aXZlc2NyaXB0LWFuZ3VsYXIvcm91dGVyXCI7XG5pbXBvcnQgeyBSb3V0ZXMgfSBmcm9tIFwiQGFuZ3VsYXIvcm91dGVyXCI7XG5cblxuaW1wb3J0IHsgQXBwQ29tcG9uZW50IH0gZnJvbSBcIi4vYXBwLmNvbXBvbmVudFwiO1xuaW1wb3J0IHsgVmlld0NvbXBvbmVudCB9IGZyb20gXCIuL3ZpZXdzL21haW5cIjtcbmltcG9ydCB7IEluc2VydHMgfSBmcm9tIFwiLi92aWV3cy9pbnNlcnRzL2luc2VydC1jb21wb25lbnRcIjtcbmltcG9ydCB7IERlbGV0ZUNvbXBvbmVudCB9IGZyb20gXCIuL3ZpZXdzL2RlbGV0ZXMvZGVsZXRlLWNvbXBvbmVudFwiO1xuaW1wb3J0IHsgVmlld0NvbXBvbmVudFRlc3QgfSBmcm9tIFwiLi92aWV3cy90ZXN0L21haW4tdGVzdFwiO1xuaW1wb3J0IHsgTG9naW5Db21wb25lbnQgfSBmcm9tIFwiLi92aWV3cy9zZXR0aW5nL2xvZ2luL2xvZ2luLWNvbXBvbmVudFwiO1xuXG5cbmNvbnN0IHJvdXRlczogUm91dGVzID0gW1xuICAgIHsgcGF0aDogXCJcIiwgcmVkaXJlY3RUbzogXCIvbG9naW5cIiwgcGF0aE1hdGNoOiBcImZ1bGxcIiB9LFxuICAgIHsgcGF0aDogXCJpbnNlcnRcIiAsIGNvbXBvbmVudCA6IEluc2VydHMgfSxcbiAgICB7IHBhdGg6IFwibWFpblwiICwgY29tcG9uZW50IDogVmlld0NvbXBvbmVudH0sXG4gICAgeyBwYXRoOiBcInNhbXBsZVwiICwgY29tcG9uZW50IDogQXBwQ29tcG9uZW50fSxcbiAgICB7IHBhdGg6IFwiZGVsZXRlXCIgLCBjb21wb25lbnQgOiBEZWxldGVDb21wb25lbnR9LFxuICAgIHsgcGF0aDogXCJ2aWV3X3Rlc3RcIiAsIGNvbXBvbmVudCA6IFZpZXdDb21wb25lbnRUZXN0fSxcbiAgICB7IHBhdGg6IFwibG9naW5cIiAsIGNvbXBvbmVudCA6IExvZ2luQ29tcG9uZW50fVxuXTtcblxuQE5nTW9kdWxlKHtcbiAgICBpbXBvcnRzOiBbTmF0aXZlU2NyaXB0Um91dGVyTW9kdWxlLmZvclJvb3Qocm91dGVzKV0sXG4gICAgZXhwb3J0czogW05hdGl2ZVNjcmlwdFJvdXRlck1vZHVsZV1cbn0pXG5cbmV4cG9ydCBjbGFzcyBBcHBSb3V0aW5nTW9kdWxlIHsgfSJdfQ==

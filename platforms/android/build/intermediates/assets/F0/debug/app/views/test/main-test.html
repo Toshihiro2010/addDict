@@ -1,0 +1,30 @@
+
+
+<StackLayout orientation="vertical">
+    <ActionBar title="Test View Main 2" > </ActionBar>
+    <Button text="test"></Button>
+    <StackLayout dock="top" orientation="horizontal" backgroundColor="red">
+        <TextField [(ngModel)]="word_search" hint="Engworld" width="80%" class="input-text" ></TextField>
+        <Button text="+" (tap)="btnInsert()" width="9.5%" class="btn-main-insert"></Button>
+        <Button text="-" (tap)="btnDelete()" width="10%" class="btn-main-delete"></Button>
+    </StackLayout>
+
+    
+    
+    
+        <Button  text="fill" style="background-color: wheat; " width="100%" ></Button>
+    
+  
+
+
+
+
+
+
+    <StackLayout orientation="horizontal" backgroundColor="blue" height="auto">
+        <Button text="&lt;" width="50" backgroundColor="gray"  ></Button>
+        <Button text="reactions" width="71%" backgroundColor="darkgray" ></Button>
+        <Button text="&gt;" width="50" backgroundColor="gray" ></Button>
+    </StackLayout>
+
+</StackLayout>

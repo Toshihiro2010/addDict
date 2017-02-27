@@ -1,0 +1,28 @@
+<StackLayout orientation="vertical">
+    <ActionBar title="Test Main Sqlite2" > </ActionBar>
+    <StackLayout orientation="horizontal">
+        <TextField [(ngModel)]="word_search" hint="Engworld" width="80%" class="input-text" ></TextField>
+        <Button text="+" (tap)="btnInsert()" width="9.5%" class="btn-main-insert"></Button>
+        <Button text="-" (tap)="btnDelete()" width="10%" class="btn-main-delete"></Button>
+    </StackLayout>
+    <Button text="Search" (tap)="btnSelect()" ></Button>
+    <Label [text]="word_search"></Label>
+    <ListView [items]="word_list2"  (itemTap)="onItemTap($event)">
+		    <template let-item="item" let-i="index">
+	            <StackLayout orientation="horizontal" class="itemTemplate" > 
+                    
+	            	<Label text="{{item.wordThai}} " class="bold" ></Label>
+                    <Label [text]="item.wordEng" ></Label>
+				</StackLayout>
+	        </template>
+	</ListView>
+    <Button text="fetch" (tap)="fetch()" ></Button>
+    <Button text="random" (tap)="btnSelectRandom()" ></Button>
+
+    <Label [text]="eng_rand" ></Label>
+    <Label [text]="type_rand"></Label>
+    <Label [text]="thai_rand"></Label>
+    
+
+    
+</StackLayout>

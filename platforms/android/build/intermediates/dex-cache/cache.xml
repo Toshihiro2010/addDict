@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\widgets-release\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="8a73b09319cc3945912970487ced4c7724acc97d">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\intermediates-exploded-aar-widgets-release_8a84899e4183685781368fd27a8bcc9d85859afa.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="7bde4c34162092e0a77e7f12dc85ed77c484cf5c">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-media-compat-25.1.1_f1085dd9a2cda714ca2a4164f287b23d62214a3f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-appcompat-v7-25.1.1_4311355db08e08ce82117b253e06dca6d5609a82.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\test6\runtime\unspecified\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="2add7177c57b1660493a1cbc08ae842e96b04463">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\test6-runtime-unspecified_143cb0dcf9e65b247c0b78a34707a6d0d3bbeb09.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="3e04ac8ca644ea7baddf6fdcf72e15c79e9df94a">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-core-ui-25.1.1_6323ceb03d4600ecbe92006423c90a076e336357.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c9649557905bf7a80fca9e0d54cbcb7662627860">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-recyclerview-v7-25.1.1_409174aebff902fde28f8f536565e9dd1fe8fc5c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\transition\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="15b049fedbd8e3926bf99d9e45dfc9b2a1043bb9">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-transition-25.1.1_8f412579cfc64f9ff8551e4a1eaa2297ce25b8d8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="c03bf57f358aa10d253f21989e93bcf6014b3b17">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-vector-drawable-25.1.1_e616a27a10ab17cb66585758cfa5cc7672719830.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0fb891e8f0cfba0513043a7bb357513d229ca2cd">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-core-utils-25.1.1_e5a697011ec0285401f344a9e7e981690958db44.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\support-fragment\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-fragment-25.1.1_a41b4bc4c4949b5110df462cc05c3cc1a5f8f0c6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\support-v4\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-v4-25.1.1_ed42ab70f9523d5c69a246f3a8b372b1bd95b658.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\support-compat\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="02741d05d4b697fba5e279e9881aaa1da0ca7c7f">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-support-compat-25.1.1_b33246d44c736a8824694abc015a0da88bb8b1a9.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\test6\runtime\unspecified\jars\libs\binding-generator.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="bbf23f78c0e92e11a9805b9fb54bab3810ca30da">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\binding-generator_917deb351798c4fe2baf5dec8404180a1499cdb3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\lenovo\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\25.1.1\support-annotations-25.1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b59b6ee8d6ecc03e672d253800430343493a6ed8">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\support-annotations-25.1.1_ce5600f99260e5f78ded6c9e0dd4525ff6537f72.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="0d191c1a09e4892d059e5ce749e4ad4e08129e35">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-animated-vector-drawable-25.1.1_a22399f43c4cde0a010fea62e84d322a874131c3.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="E:\test\test6\platforms\android\build\intermediates\exploded-aar\com.android.support\design\25.1.1\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cd7951e04cfb9a8bf008d544a478d9a8d8192d38">
+        <dex dex="E:\test\test6\platforms\android\build\intermediates\pre-dexed\F0\debug\com.android.support-design-25.1.1_054659f64f7bf9a7a9e8fbe712533ae718720205.jar" />
+    </item>
+
+</items>

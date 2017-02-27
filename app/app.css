@@ -1,0 +1,27 @@
+@import 'nativescript-theme-core/css/core.light.css';
+
+
+
+.input-text{
+    margin-left: 5px;
+    padding-left: 10;
+
+}
+.insert-text{
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-left: 20;
+    padding-right: 20;
+}
+.btn-insert{
+    align-items: center;
+    width: 50%;
+}
+
+
+.btn-main-delete{
+    background-color: red;
+}
+.btn-main-insert{
+    background-color: greenyellow;
+}

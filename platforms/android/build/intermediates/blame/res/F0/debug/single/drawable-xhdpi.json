@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "E:\\test\\test6\\platforms\\android\\build\\intermediates\\res\\merged\\F0\\debug\\drawable-xhdpi\\icon.png",
+        "source": "E:\\test\\test6\\platforms\\android\\src\\main\\res\\drawable-xhdpi\\icon.png"
+    },
+    {
+        "merged": "E:\\test\\test6\\platforms\\android\\build\\intermediates\\res\\merged\\F0\\debug\\drawable-xhdpi\\background.png",
+        "source": "E:\\test\\test6\\platforms\\android\\src\\main\\res\\drawable-xhdpi\\background.png"
+    },
+    {
+        "merged": "E:\\test\\test6\\platforms\\android\\build\\intermediates\\res\\merged\\F0\\debug\\drawable-xhdpi\\logo.png",
+        "source": "E:\\test\\test6\\platforms\\android\\src\\main\\res\\drawable-xhdpi\\logo.png"
+    }
+]
