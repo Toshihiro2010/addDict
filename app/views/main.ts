@@ -223,21 +223,30 @@ export class ViewComponent implements OnInit {
         let self = this;
         var search = self.word_search;
         
-        var delPop = self.word_list2.length;
-        for (var i = 0 ; i < delPop ; i++){
-            self.word_list2.pop();
-        }
+    
+        
 
         if (search == ""){
             alert("มีช่องว่างนะไอ้โง่ .....");
         }else{
+
             console.log("Check ==> " , "Select ===> " + search);
-             var temp = "%"+search+"%";
+            var delPop = self.word_list2.length;
+            console.log("delpop length ==>" , delPop);
+        
+            if(delPop >0 ){
+                for (var i = 0 ; i < delPop ; i++){
+                    self.word_list2.pop();
+                }
+            }
+             var temp = search+"%";
             
             self.database.all("SELECT * FROM dict WHERE engWorld LIKE (?) or thaiWorld LIKE (?)",[temp,temp] ).then(rows =>{
                 if(rows ==""){
                     console.log("not word ===>  " + rows + "is " + search);
                     alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
+                }else{
+                    self.word_search = "";
                 }
                 
                 self.word_list = rows;
