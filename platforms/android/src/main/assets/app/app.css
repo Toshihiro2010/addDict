@@ -25,3 +25,11 @@
 .btn-main-insert{
     background-color: greenyellow;
 }
+
+.btn-favorite-true{
+    background-color: pink;
+}
+.btn-favorite-false{
+    background-color: red;
+
+}

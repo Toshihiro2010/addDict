@@ -1,6 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit  } from "@angular/core";
 import {Router, NavigationExtras} from "@angular/router"; 
 import { Item } from "../../models/items/item";
+import application = require("application");
+
 
 @Component({
     selector: "ns-app",
@@ -10,6 +12,10 @@ export class ListComponent implements OnInit {
 
     words = [];
     
+  
+
+    
+    
     constructor(private router: Router) {
 	}
 	
@@ -17,6 +23,11 @@ export class ListComponent implements OnInit {
 		let self = this;
 		self.getUsers();
 	}
+
+    ngDoCheck(){
+        console.log("ngDoCheck ========= > Do =====>" , this.words);
+        
+    }
 
     getUsers(){
 		let self = this;
@@ -60,7 +71,7 @@ export class ListComponent implements OnInit {
         tmpItem3.wordThai = "ทดสอบ3";
         self.words.push(tmpItem3);
         */
-		//
+		
 	}
 
 
@@ -77,10 +88,14 @@ export class ListComponent implements OnInit {
             }
         };
         this.router.navigate(["view-list"], navigationExtras);
+
+        
     }
 
     btnMain(){
         console.log("click buuton main");
         this.router.navigate(["main"]);
     }
+    
+    
  }

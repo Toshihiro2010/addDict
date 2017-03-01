@@ -15,7 +15,7 @@ import { ListDetailComponent } from "./views/list-detail/detail";
 
 
 const routes: Routes = [
-    { path: "", redirectTo: "/login", pathMatch: "full" },
+    { path: "", redirectTo: "/main", pathMatch: "full" },
     { path: "insert" , component : Inserts },
     { path: "main" , component : ViewComponent},
     { path: "sample" , component : AppComponent},

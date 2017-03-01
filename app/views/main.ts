@@ -35,7 +35,7 @@ export class ViewComponent implements OnInit {
         
         //Code ตอนที่ไม่มีอะไรเลย เริ่มสร้างจาก 1
         (new Sqlite("dicts.db")).then(db => {
-            db.execSQL("CREATE TABLE IF NOT EXISTS dict (id INTEGER PRIMARY KEY AUTOINCREMENT, engWorld TEXT, thaiWorld TEXT ,type TEXT DEFAULT 'Noun' , sTime DATE DEFAULT Null )").then(id =>{
+            db.execSQL("CREATE TABLE IF NOT EXISTS dict (id INTEGER PRIMARY KEY AUTOINCREMENT, engWorld TEXT, thaiWorld TEXT ,type TEXT DEFAULT 'Noun',favorite NUMBER DEFAULT 0 , sTime DATE DEFAULT Null )").then(id =>{
                 this.database = db;
                 console.log("CREAT TABLE ===> Success ");
                 //this.insert();
@@ -94,6 +94,30 @@ export class ViewComponent implements OnInit {
     }
 
     public fetch(){
+
+        let self = this;
+        console.log("Go to ===> fetch");
+        this.database.all("SELECT * FROM dict").then(rows =>{
+            console.log(rows);
+            this.word_list = rows;
+            /*for(var row in rows){
+                console.log("Result ==v");
+            
+                console.log("result all ==> " , rows[row]);//result all
+                console.log("eng_word ==> " , rows[row][1]); // result eng
+                console.log("thai_word ==> " , rows[row][2]); //result thai
+                console.log("type word ==> " , rows[row][3]); //result thai
+            }*/
+            for(var i=0 ; i < rows.length ; i++ ){
+                    console.log("result ==>" , rows[i]); 
+                }    
+        },error =>{
+            console.log("SELECT ERROR " , error);
+        })  
+    }
+
+    private fetch2(){
+        let self = this;
         console.log("Go to ===> fetch");
         this.database.all("SELECT * FROM dict").then(rows =>{
             console.log(rows);
@@ -109,6 +133,10 @@ export class ViewComponent implements OnInit {
             for(var i=0 ; i < rows.length ; i++ ){
                     console.log("result ==>" , rows[i]); 
                 }
+            self.refeshList();
+            self.pushList(rows);
+            self.refeshList();
+            self.pushList(rows);   
         },error =>{
             console.log("SELECT ERROR " , error);
         })
@@ -179,13 +207,12 @@ export class ViewComponent implements OnInit {
     onItemTap(args) {
 		let self = this;
 		let word = self.word_list2[args.index];
-		//this.router.navigate(["view-list", word.id]);
-        //console.log("------------------------ ItemTapped: " + args.index);
+		
 
         console.log(JSON.stringify(word) );
         let navigationExtras: NavigationExtras = {
             queryParams: {
-                "word": JSON.stringify(word)
+                "words": JSON.stringify(word)
             }
         };
         this.router.navigate(["list-detail"], navigationExtras);
@@ -199,47 +226,28 @@ export class ViewComponent implements OnInit {
         temp_list = self.word_list;
         
         for(var row in temp_list){
- 
-
             let model_item : Item = new Item();
 
             model_item.id = temp_list[row][0];
             model_item.wordEng = temp_list[row][1];
             model_item.wordThai = temp_list[row][2];
+            model_item.wordType = temp_list[row][3];
+            model_item.wordFavorite = temp_list[row][4];
 
             //console.log(temp_list[row][0] +" " + temp_list[row][1] +" " + temp_list[row][2] );
 
             self.word_list2.push(model_item);
-            
+       
         }
-
     }
-
-
-
-   
-
     getItemSelect(){
         let self = this;
         var search = self.word_search;
-        
-    
-        
-
         if (search == ""){
             alert("มีช่องว่างนะไอ้โง่ .....");
         }else{
-
             console.log("Check ==> " , "Select ===> " + search);
-            var delPop = self.word_list2.length;
-            console.log("delpop length ==>" , delPop);
-        
-            if(delPop >0 ){
-                for (var i = 0 ; i < delPop ; i++){
-                    self.word_list2.pop();
-                }
-            }
-             var temp = search+"%";
+            var temp = search+"%";
             
             self.database.all("SELECT * FROM dict WHERE engWorld LIKE (?) or thaiWorld LIKE (?)",[temp,temp] ).then(rows =>{
                 if(rows ==""){
@@ -250,19 +258,11 @@ export class ViewComponent implements OnInit {
                 }
                 
                 self.word_list = rows;
-                for(var row in rows){
-                  console.log(rows[row]);
+                self.refeshList();
+                self.pushList(rows);
+                self.refeshList();
+                self.pushList(rows);
 
-                    let model_item : Item = new Item();
-
-                    model_item.id = rows[row][0];
-                    model_item.wordEng = rows[row][1];
-                    model_item.wordThai = rows[row][2];
-
-                    console.log(rows[row][0] +" " + rows[row][1] +" " + rows[row][2] +"" );
-
-                    self.word_list2.push(model_item);
-                    }
                 },error =>{
                     console.log("SELECT ERROR " , error);
                 })
@@ -278,47 +278,52 @@ export class ViewComponent implements OnInit {
             
             console.log("eng_word ==> " , rows[0][1]); // result eng
             this.eng_rand = rows[0][1];
-            //this.items.wordEng = rows[0][1];
-            //console.log("eng_word ITEM ==> " , this.items.wordEng); // result eng
-            
             console.log("thai_word ==> " , rows[0][2]); //result thai
             this.thai_rand = rows[0][2];
-            //this.items.wordThai = rows[0][2];
-            //console.log("eng_thai ITEM ==> " , this.items.wordThai); // result eng
-
-
             console.log("type word ==> " , rows[0][3]); //result type
             this.type_rand = rows[0][3];
-            //this.items.wordType = rows[0][3];
-            //console.log("eng_type ITEM ==> " , this.items.wordType); // result eng
-
-            /*for(var row in rows){
-                console.log("Result ==v");
-            
-                console.log("result all ==> " , rows[0][0]);//result all
-
-                console.log("eng_word ==> " , rows[row][1]); // result eng
-                this.eng_rand = rows[row][1];
-            
-                console.log("thai_word ==> " , rows[row][2]); //result thai
-                this.thai_rand = rows[row][2];
-
-
-                console.log("type word ==> " , rows[row][3]); //result type
-                this.type_rand = rows[row][3];
-            }*/
-            /*for(var i=0 ; i < rows.length ; i++ ){
-                    console.log("result for row ==>" , rows[i]); 
-                }*/
-
-
-            //this.eng_rand = rows[1];
+        
 
         },error =>{
             console.log("SELECT ERROR " , error);
         })
 
         
+    }
+
+    refeshList(){
+        let self = this;
+        var delPop = self.word_list2.length;
+            console.log("delpop length ==>" , delPop);
+        
+            if(delPop >0 ){
+                for (var i = 0 ; i < delPop ; i++){
+                    self.word_list2.pop();
+                }
+            }
+    }
+
+    pushList(args){
+        let self = this;
+        let rows = args;
+
+
+        for(var row in rows){
+                  console.log(rows[row]);
+
+                    let model_item : Item = new Item();
+
+                    model_item.id = rows[row][0];
+                    model_item.wordEng = rows[row][1];
+                    model_item.wordThai = rows[row][2];
+                    model_item.wordType = rows[row][3];
+                    model_item.wordFavorite = rows[row][4];
+
+                    console.log(rows[row][0] +" " + rows[row][1] +" " + rows[row][2] +"" );
+
+                    self.word_list2.push(model_item);
+                    }
+
     }
     
 
