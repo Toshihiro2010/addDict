@@ -15,7 +15,8 @@ import { LoginComponent } from "./views/setting/login/login-component";
 import { ListComponent } from "./views/list/main";
 import { ViewItem } from "./views/views-item/view-item";
 import { ListDetailComponent } from "./views/list-detail/detail";
-
+import { HistoryComponent } from "./views/history/history-component";
+import { FavoriteComponent } from "./views/favorite/favortie-component";
 
 
 
@@ -43,7 +44,9 @@ import { ListDetailComponent } from "./views/list-detail/detail";
         LoginComponent,
         ListComponent,
         ViewItem,
-        ListDetailComponent
+        ListDetailComponent,
+        HistoryComponent,
+        FavoriteComponent
         
     ],
     providers: [

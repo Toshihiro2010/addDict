@@ -12,6 +12,9 @@ import { LoginComponent } from "./views/setting/login/login-component";
 import { ListComponent } from "./views/list/main";
 import { ViewItem } from "./views/views-item/view-item";
 import { ListDetailComponent } from "./views/list-detail/detail";
+import { HistoryComponent } from "./views/history/history-component";
+import { FavoriteComponent } from "./views/favorite/favortie-component";
+
 
 
 const routes: Routes = [
@@ -24,7 +27,9 @@ const routes: Routes = [
     { path: "login" , component : LoginComponent},
     { path: "list" , component: ListComponent },
     { path: "view-list" , component: ViewItem },
-    { path: "list-detail" , component:ListDetailComponent}
+    { path: "list-detail" , component:ListDetailComponent},
+    { path: "history" , component:HistoryComponent },
+    { path: "favorite " , component : FavoriteComponent}
 ];
 
 @NgModule({
