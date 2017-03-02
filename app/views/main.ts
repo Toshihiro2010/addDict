@@ -18,14 +18,15 @@ export class ViewComponent implements OnInit {
 
     private database : any;
 
-    eng_rand ="";
-    thai_rand = "";
-    type_rand ="";
+    eng_rand ="";   //word eng Random show on layout
+    thai_rand = ""; //word thai Random show on layout
+    type_rand ="";  //word type Random show on layout
+    word_list2 = [];    //list show on layout
 
-    word_search ="";
+    word_search ="";     //ngModule input word search
     
-    word_list = [];
-    word_list2 = [];
+    word_list = [];     //list sql temp 
+    word_search_sql = "";   //output on sql 
 
     
     
@@ -99,7 +100,7 @@ export class ViewComponent implements OnInit {
         console.log("Go to ===> fetch");
         this.database.all("SELECT * FROM dict").then(rows =>{
             console.log(rows);
-            this.word_list = rows;
+            self.word_list = rows;
             /*for(var row in rows){
                 console.log("Result ==v");
             
@@ -201,21 +202,8 @@ export class ViewComponent implements OnInit {
     //  function use for listview
     ngOnInit(): void {
         let self = this;
-		self.getItem();
-    }
-
-    onItemTap(args) {
-		let self = this;
-		let word = self.word_list2[args.index];
-		
-
-        console.log(JSON.stringify(word) );
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "words": JSON.stringify(word)
-            }
-        };
-        this.router.navigate(["list-detail"], navigationExtras);
+		//self.getItem();
+        self.pushList(self.word_list);
     }
 
     getItem(){
@@ -257,7 +245,7 @@ export class ViewComponent implements OnInit {
                     self.word_search = "";
                 }
                 
-                self.word_list = rows;
+                self.word_search_sql = rows;
                 self.refeshList();
                 self.pushList(rows);
                 self.refeshList();
@@ -295,7 +283,6 @@ export class ViewComponent implements OnInit {
         let self = this;
         var delPop = self.word_list2.length;
             console.log("delpop length ==>" , delPop);
-        
             if(delPop >0 ){
                 for (var i = 0 ; i < delPop ; i++){
                     self.word_list2.pop();
@@ -307,23 +294,31 @@ export class ViewComponent implements OnInit {
         let self = this;
         let rows = args;
 
-
         for(var row in rows){
-                  console.log(rows[row]);
+            console.log(rows[row]);
+            let model_item : Item = new Item();
+            model_item.id = rows[row][0];
+            model_item.wordEng = rows[row][1];
+            model_item.wordThai = rows[row][2];
+            model_item.wordType = rows[row][3];
+            model_item.wordFavorite = rows[row][4];
+            //console.log(rows[row][0] +" " + rows[row][1] +" " + rows[row][2] +"" );
+            self.word_list2.push(model_item);
+        }
 
-                    let model_item : Item = new Item();
+    }
 
-                    model_item.id = rows[row][0];
-                    model_item.wordEng = rows[row][1];
-                    model_item.wordThai = rows[row][2];
-                    model_item.wordType = rows[row][3];
-                    model_item.wordFavorite = rows[row][4];
 
-                    console.log(rows[row][0] +" " + rows[row][1] +" " + rows[row][2] +"" );
+    onItemTap(args) {
+		let self = this;
+		let word = self.word_list2[args.index];
 
-                    self.word_list2.push(model_item);
-                    }
-
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "words": JSON.stringify(word)
+            }
+        };
+        this.router.navigate(["list-detail"], navigationExtras);
     }
     
 
