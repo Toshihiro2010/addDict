@@ -18,10 +18,13 @@ export class ListDetailComponent implements OnInit {
 
 
 
-    private database;
+    private database; // ตัวแปร Database
 
      public constructor(private route: ActivatedRoute) {
+
         let self = this;
+
+
         this.route.queryParams.subscribe(params => {
         console.log(JSON.stringify(params) );
         self.word = JSON.parse(params["words"]); // ให้ตัวแปร self.word รับค่าจาก list main ด้วยรูป json โดยส่งมาในชื่อ words ด้วยคำสั่ง params["words"]
@@ -35,11 +38,8 @@ export class ListDetailComponent implements OnInit {
         self.favorite = self.word.wordFavorite; // ให้ favorite = 
     
         self.word.wordType = "[" + self.word.wordType + "]";
-        });
-    }
 
-    ngOnInit(){
-        let self = this;
+
         new Sqlite("dicts.db").then(db =>{
             this.database = db;
             console.log("Open database Success");
@@ -48,6 +48,12 @@ export class ListDetailComponent implements OnInit {
             console.log("Open DB ERROR" , error);
         })
 
+        
+        });
+    }
+
+    ngOnInit(){
+        let self = this;
         self.myHistory();
     }
 
@@ -82,14 +88,79 @@ export class ListDetailComponent implements OnInit {
     private myHistory(){
         let self = this;
         let word_id = self.word.id;
-        console.log("Method === > " , "myHistory ==== > ==> " , self.word.id);
+        self.myCheckHistory(word_id);
         
+        
+
+    }
+
+    private myCheckHistory(word_id){
+        let self = this;
+
+        self.database.all("SELECT * FROM HISTORY WHERE word_id = (?)",[word_id]).then(rows =>{
+            if(rows ==""){
+                self.myInsertHistory(word_id);
+            }else{
+                self.myDeleteHistory(word_id);
+            }
+        },error =>{
+            console.log("SELECT ERROR " , error);
+        })
+
+
+        
+
+    }
+
+    private myDeleteHistory(word_id){
+        let self = this;
+
+        self.database.execSQL("DELETE FROM HISTORY WHERE word_id = (?)", [word_id]).then(word_delete => {
+            console.log("DELETE RESULT => " , word_delete  );
+            self.myInsertHistory(word_id);
+            }, error => {
+                console.log("DELETE ERROR => " , error);
+            }
+        );
+
+
+
+    }
+
+    private myInsertHistory(word_id){
+        let self = this;
+        self.database.execSQL("INSERT INTO HISTORY (word_id) VALUES (?)", [word_id]).then(word_insert => {
+                console.log("INSERT RESULT => " , word_insert  );
+                }, error => {
+                    console.log("INSERT ERROR => " , error);
+                }
+        );
 
     }
 
     private fetchJoin(){
         let self = this;
         console.log("go to fetch Join ==== > ");
+
+        self.database.all("SELECT h.id, h.word_id , d.engWorld , d.thaiWorld , d.type FROM dict d join HISTORY h on d.id = h.word_id ORDER BY h.id DESC").then(rows =>{
+            for(var row in rows){
+                console.log("Result ==v");
+                
+                /*for(var i=0 ; i <= rows.length ; i++ ){
+                    console.log("result ==>" , rows[row][i]); 
+                }*/
+                console.log("result all ==> " , rows[row]);//result all
+                /*console.log("id_History ==> " , rows[row][0]); // result eng
+                console.log("word_id ==> " , rows[row][1]); // result eng
+                console.log("eng_word ==> " , rows[row][2]); // result eng
+                console.log("thai_word ==> " , rows[row][3]); //result thai
+                console.log("word_type ==> " , rows[row][4]); //result thai*/
+            }
+        },error =>{
+            console.log("SELECT ERROR " , error);
+        })
+
+        
         
     }
 
