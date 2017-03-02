@@ -13,7 +13,7 @@ import { ListComponent } from "./views/list/main";
 import { ViewItem } from "./views/views-item/view-item";
 import { ListDetailComponent } from "./views/list-detail/detail";
 import { HistoryComponent } from "./views/history/history-component";
-import { FavoriteComponent } from "./views/favorite/favortie-component";
+import { FavoriteComponent } from "./views/favorite/favorite-component";
 
 
 
@@ -29,7 +29,7 @@ const routes: Routes = [
     { path: "view-list" , component: ViewItem },
     { path: "list-detail" , component:ListDetailComponent},
     { path: "history" , component:HistoryComponent },
-    { path: "favorite " , component : FavoriteComponent}
+    { path: "favorite" , component : FavoriteComponent}
 ];
 
 @NgModule({

@@ -16,7 +16,7 @@ import { ListComponent } from "./views/list/main";
 import { ViewItem } from "./views/views-item/view-item";
 import { ListDetailComponent } from "./views/list-detail/detail";
 import { HistoryComponent } from "./views/history/history-component";
-import { FavoriteComponent } from "./views/favorite/favortie-component";
+import { FavoriteComponent } from "./views/favorite/favorite-component";
 
 
 

@@ -140,7 +140,7 @@ export class ListDetailComponent implements OnInit {
 
     private fetchJoin(){
         let self = this;
-        console.log("go to fetch Join ==== > ");
+        console.log("go to fetch Join ");
 
         self.database.all("SELECT h.id, h.word_id , d.engWorld , d.thaiWorld , d.type FROM dict d join HISTORY h on d.id = h.word_id ORDER BY h.id DESC").then(rows =>{
             for(var row in rows){

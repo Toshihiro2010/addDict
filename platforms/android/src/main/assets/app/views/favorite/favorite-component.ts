@@ -7,8 +7,8 @@ var Toast = require("nativescript-toast");
 
 
 @Component({
-    selector: "Favorite",
-    templateUrl: "views/favortie/favortie-component.html",
+    selector: "favorite",
+    templateUrl: "views/favorite/favorite-component.html",
 })
 export class FavoriteComponent {
     
