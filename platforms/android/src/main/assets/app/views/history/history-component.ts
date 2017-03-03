@@ -12,46 +12,65 @@ var Toast = require("nativescript-toast");
 export class HistoryComponent implements OnInit {
 
     private database;
-    private word_sql :string; // out put on sql
+    private word_sql =[]; // out put on sql
 
 
-    private show_list; // show list on layout
+    private show_list = []; // show list on layouts
+    
+    
 
     
     constructor(){
+        let self = this;
         new Sqlite("dicts.db").then(db =>{
-            this.database = db;
+            self.database = db;
             console.log("Open database Success");
-            
+            self.mySqlfetch();
         },error =>{
             console.log("Open DB ERROR" , error);
         })
+    
+        
 
     }
 
-    ngOnInit() {
-		let self = this;
-        let strSQL = "SELECT h.id, h.word_id , d.engWorld , d.thaiWorld , d.type FROM HISTORY h join dict d on h.word_id = d.id ORDER BY h.id DESC";
+    private mySqlfetch(){
+        let self = this;
+        let strSQL = "SELECT h.id, h.word_id , d.engWorld , d.thaiWorld , d.type , d.favorite FROM HISTORY h join dict d on h.word_id = d.id ORDER BY h.id DESC";
         self.database.all(strSQL).then(result => {
             self.word_sql = result;
-            for(var row in result){
-                console.log("result all ===> " , result[row]);// result all
-                
-            }
         },error =>{
             console.log("SELECT History Error => " , error);
             
         })
-		self.getItem();
-	}
+    }
 
-    getItem(){
+    ngOnInit() {
+        console.log("ngOnInit == v");
+        
 		let self = this;
-        let word_sql = self.word_sql;
-        console.log(word_sql[0]);
-
-
+        self.setList();
 	}
+
+    private setList(){
+        let self = this;
+        let word = self.word_sql;
+        
+        for(var row in word){ 
+            let model_item : Item = new Item();       
+
+            console.log("word on set list " , word[row]);
+            model_item.id = word[row][1];
+            model_item.wordEng = word[row][2] + " ";
+            model_item.wordThai = word[row][3] + " ";
+            model_item.wordType = " [" + word[row][4] + "] ";
+            model_item.wordFavorite = word[row][5];
+
+            self.show_list.push(model_item);
+        }
+        
+
+    }
 
     
 

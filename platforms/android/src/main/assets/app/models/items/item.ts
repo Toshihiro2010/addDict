@@ -3,5 +3,5 @@ export class Item{
     wordEng : string;
     wordThai : string;
     wordType : string;
-    wordFavorite : string;
+    wordFavorite : number;
 }

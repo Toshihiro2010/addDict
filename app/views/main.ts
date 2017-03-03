@@ -41,14 +41,8 @@ export class ViewComponent implements OnInit {
                 console.log("CREAT TABLE ===> Success ");
                 //this.insert();
                 this.fetch();
-                db.execSQL("CREATE TABLE IF NOT EXISTS FAVORITE (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER)").then(id =>{
-                    this.database = db;
-                    console.log("CREATE FAVORITE Success");
-                    this.createHistory();
-                    this.btnSelectRandom();
-                },error =>{
-                    console.log("CREATE TABLE FAVORITE ERROR" , error);
-                });
+                this.createHistory();
+                this.btnSelectRandom();
             },error =>{
                 
                 console.log("CREATE TABLE ERROR" , error);
@@ -136,8 +130,8 @@ export class ViewComponent implements OnInit {
                 }
             self.refeshList();
             self.pushList(rows);
-            self.refeshList();
-            self.pushList(rows);   
+            //self.refeshList();
+            //self.pushList(rows);   
         },error =>{
             console.log("SELECT ERROR " , error);
         })
@@ -248,8 +242,8 @@ export class ViewComponent implements OnInit {
                 self.word_search_sql = rows;
                 self.refeshList();
                 self.pushList(rows);
-                self.refeshList();
-                self.pushList(rows);
+                //self.refeshList();
+                //self.pushList(rows);
 
                 },error =>{
                     console.log("SELECT ERROR " , error);

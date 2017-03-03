@@ -1,12 +1,13 @@
 <page-router-outlet>
     <ActionBar title="Hisory Layout" > </ActionBar>
     <StackLayout orientation="vertical">
-        <Label text="Words list"></Label>
+        
         <ListView [items]="show_list"  (itemTap)="onItemTap($event)" >
 		    <template let-item="item" let-i="index">
 	            <StackLayout orientation="horizontal" class="itemTemplate" > 
                     
-	            	<Label text="{{item.wordEng}}" ></Label>
+	            	<Label [text]="item.wordEng"></Label>
+                    <Label [text]="item.wordType"></Label>
                     <Label [text]="item.wordThai" ></Label>
 				</StackLayout>
 	        </template>
