@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit ,AfterViewChecked , AfterViewInit  } from "@angular/core";
 import {Router, NavigationExtras} from "@angular/router"; 
 import listViewModule = require("ui/list-view");
 
@@ -14,7 +14,7 @@ var Sqlite = require("nativescript-sqlite");
     selector: "ns-app",
     templateUrl: "views/main.html",
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit {
 
     private database : any;
 
@@ -26,7 +26,7 @@ export class ViewComponent implements OnInit {
     word_search ="";     //ngModule input word search
     
     word_list = [];     //list sql temp 
-    word_search_sql = "";   //output on sql 
+    word_search_sql = "";   //output on sqlll
 
     
     
@@ -66,9 +66,20 @@ export class ViewComponent implements OnInit {
         //this.items = new Item();
     }
 
+    ngAfterViewChecked(){
+        console.log("ng ngAfterViewChecked");
+        
+    }
+    ngAfterViewInit(){
+        console.log("ng==========> AfterViewInit");
+        
+    }
+    
+
     public createHistory(){
-        this.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
-                    this.database = this.database;
+        let self = this;
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
+                    self.database = self.database;
                     console.log("CREATE HISTORY Success");
                 },error =>{
                     console.log("CREATE TABLE HISTORY ERROR" , error);
@@ -79,10 +90,11 @@ export class ViewComponent implements OnInit {
 
 
     public insert(){
-        this.database.execSQL("INSERT INTO dict (engWorld, thaiWorld) VALUES (?,?)", ["red" ,"แดง"]).then(all_word => {
+        let self = this;
+        self.database.execSQL("INSERT INTO dict (engWorld, thaiWorld) VALUES (?,?)", ["red" ,"แดง"]).then(all_word => {
                 console.log("INSERT RESULT => " , all_word  );
          
-                this.fetch();
+                self.fetch();
             }, error => {
             console.log("INSERT ERROR => " , error);
             });
@@ -92,7 +104,7 @@ export class ViewComponent implements OnInit {
 
         let self = this;
         console.log("Go to ===> fetch");
-        this.database.all("SELECT * FROM dict").then(rows =>{
+        self.database.all("SELECT * FROM dict").then(rows =>{
             console.log(rows);
             self.word_list = rows;
             /*for(var row in rows){
@@ -222,6 +234,7 @@ export class ViewComponent implements OnInit {
        
         }
     }
+
     getItemSelect(){
         let self = this;
         var search = self.word_search;
@@ -314,6 +327,7 @@ export class ViewComponent implements OnInit {
         };
         this.router.navigate(["list-detail"], navigationExtras);
     }
+    
     
 
     

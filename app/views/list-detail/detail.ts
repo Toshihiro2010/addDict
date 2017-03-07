@@ -36,8 +36,12 @@ export class ListDetailComponent implements OnInit {
         console.log(self.word.wordFavorite);
         
         self.favorite = self.word.wordFavorite; // ให้ favorite = 
-    
-        self.word.wordType = "[" + self.word.wordType + "]";
+        
+        let temp = self.word.wordType;
+        self.word.wordType = self.changWordType(temp);
+        console.log(self.word.wordType);
+        
+        
 
 
         new Sqlite("dicts.db").then(db =>{
@@ -161,6 +165,30 @@ export class ListDetailComponent implements OnInit {
         })
 
         
+        
+    }
+
+    private changWordType(arg){
+        console.log("changWordType == v");
+        let word = arg;
+
+        let wordIndexOf = word.indexOf("[");
+        let wordLastIndexOf = word.lastIndexOf("]");
+        console.log("word arg === > " , word);
+        
+        console.log("index of ===== > " , wordIndexOf);
+        console.log("last Indexof ===== > " , wordLastIndexOf);
+        
+
+        if(wordIndexOf == 1 && wordLastIndexOf != -1){
+            console.log(" true v");
+            return word;
+        }else{
+            console.log(" else v ");
+            
+            word = "[" + word + "]";
+            return word;
+        }    
         
     }
 

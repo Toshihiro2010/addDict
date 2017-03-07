@@ -1,5 +1,7 @@
-<page-router-outlet>
-    <ActionBar title="Test Insert" > </ActionBar>
+
+    <ActionBar title="Test Insert" >
+        <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="goBack()" > </NavigationButton>
+    </ActionBar>
     
     <StackLayout orientation="vertical">
         <TextField hint="English Word"  [(ngModel)]="eng_word" class="insert-text"></TextField>
@@ -9,4 +11,3 @@
     
 
     </StackLayout>
-</page-router-outlet>

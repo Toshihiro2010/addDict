@@ -1,6 +1,7 @@
 import { Component , OnInit } from "@angular/core";
-import { Route } from "@angular/router";
+import { Router , NavigationExtras } from "@angular/router"; 
 import { Item } from "./../../models/items/item";
+
 
 var Sqlite = require("nativescript-sqlite");
 var Toast = require("nativescript-toast");
@@ -12,7 +13,7 @@ var Toast = require("nativescript-toast");
 export class HistoryComponent implements OnInit {
 
     private database;
-    private word_sql =[]; // out put on sql
+    private word_sql =[]; // out put on sqllite
 
 
     private show_list = []; // show list on layouts
@@ -20,7 +21,7 @@ export class HistoryComponent implements OnInit {
     
 
     
-    constructor(){
+    constructor(private router: Router){
         let self = this;
         new Sqlite("dicts.db").then(db =>{
             self.database = db;
@@ -45,7 +46,7 @@ export class HistoryComponent implements OnInit {
         })
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         console.log("ngOnInit == v");
         
 		let self = this;
@@ -70,6 +71,18 @@ export class HistoryComponent implements OnInit {
         }
         
 
+    }
+
+    onItemTap(args) {
+		let self = this;
+		let word = self.show_list[args.index];
+
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "words": JSON.stringify(word)
+            }
+        };
+        this.router.navigate(["list-detail"], navigationExtras);
     }
 
     

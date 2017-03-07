@@ -18,7 +18,7 @@ import { FavoriteComponent } from "./views/favorite/favorite-component";
 
 
 const routes: Routes = [
-    { path: "", redirectTo: "favorite", pathMatch: "full" },
+    { path: "", redirectTo: "main", pathMatch: "full" },
     { path: "insert" , component : Inserts },
     { path: "main" , component : ViewComponent},
     { path: "sample" , component : AppComponent},

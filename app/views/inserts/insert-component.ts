@@ -1,5 +1,12 @@
-import { Component } from "@angular/core";
-import { Route } from "@angular/router";
+import { Component , NgModule , OnDestroy } from "@angular/core";
+import { Route , Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { platformNativeScriptDynamic } from "nativescript-angular/platform";
+
+import { NativeScriptRouterModule } from "nativescript-angular/router";
+
+
+
+
 
 
 var Sqlite = require("nativescript-sqlite");
@@ -10,7 +17,7 @@ var Toast = require("nativescript-toast");
     selector: "Inserts",
     templateUrl: "views/inserts/insert-component.html",
 })
-export class Inserts {
+export class Inserts implements OnDestroy  {
     
     
     private database :any;
@@ -18,7 +25,7 @@ export class Inserts {
     thai_word="";
 
 
-    constructor(){
+    constructor(private routerExtensions: NativeScriptRouterModule){
         new Sqlite("dicts.db").then(db =>{
             this.database = db;
             console.log("Open database Success");
@@ -27,6 +34,11 @@ export class Inserts {
             console.log("Open DB ERROR" , error);
         })
 
+    }
+
+    ngOnDestroy(){
+        console.log("Ng ===> Ondestroy");
+        
     }
 
 
@@ -55,6 +67,11 @@ export class Inserts {
             this.thai_word="";   
         }   
     }
+
+    public goBack() {
+        this.ngOnDestroy();
+    }   
+
 
   
 
