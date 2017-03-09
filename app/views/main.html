@@ -1,13 +1,17 @@
 
-<ActionBar title="" class="action-label">
-    <ActionItem ios.systemIcon="2" android.systemIcon="ic_menu_edit" ios.position="right" ></ActionItem>
-    <ActionItem ios.systemIcon="3" android.systemIcon="ic_menu_save" ios.position="left" android.position="right"></ActionItem>
-    <ActionItem ios.systemIcon="1" android.systemIcon="ic_menu_close_clear_cancel" ios.position="left" android.position="left" ></ActionItem>
-    <StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left">
+<ActionBar title="@Dict" class="action-label">
     
-        <Label text="@Dict"  class="action-label" orientation="center"></Label>
-     
-    </StackLayout>
+     <!--<ActionItem ios.systemIcon="2" android.systemIcon="ic_menu_edit" ios.position="right" android.position="right"></ActionItem>-->
+     <!--<ActionItem ios.systemIcon="3" android.systemIcon="ic_menu_save" ios.position="left" android.position="right"></ActionItem>-->
+     <!--<ActionItem ios.systemIcon="1" android.systemIcon="ic_menu_close_clear_cancel" ios.position="left" android.position="left" ></ActionItem>-->
+    
+    <ActionItem tap="onDelete" ios.systemIcon="16" ios.position="right" text="♥" android.position="popup"></ActionItem>
+    <ActionItem tap="onSave" ios.systemIcon="15" ios.position="right" text="♥" android.position="popup"></ActionItem>
+
+    <!--<StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left">-->
+        <!--<Label text="@Dict"  class="action-label" orientation="center"></Label>-->
+    <!--</StackLayout>-->
+    
 </ActionBar>
 
 <StackLayout orientation="vertical">

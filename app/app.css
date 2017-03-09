@@ -1,7 +1,10 @@
 @import 'nativescript-theme-core/css/core.light.css';
+@import url(http://weloveiconfonts.com/api/?family=entypo);
 
 
-
+.fa{
+    font-family: entypo;
+}
 .input-text{
     margin-left: 5px;
     padding-left: 10;
