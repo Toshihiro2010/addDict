@@ -1,30 +1,53 @@
 
+<ActionBar title="@Dict" class="action-label">
+    
+     <!--<ActionItem ios.systemIcon="2" android.systemIcon="ic_menu_edit" ios.position="right" android.position="right"></ActionItem>-->
+     <!--<ActionItem ios.systemIcon="3" android.systemIcon="ic_menu_save" ios.position="left" android.position="right"></ActionItem>-->
+     <!--<ActionItem ios.systemIcon="1" android.systemIcon="ic_menu_close_clear_cancel" ios.position="left" android.position="left" ></ActionItem>-->
+    
+    <ActionItem (tap)="getItemFavorite()" ios.systemIcon="16" ios.position="right" text="♥ Favorite" android.position="popup"></ActionItem>
+    <ActionItem (tap)="getItemHistory()" ios.systemIcon="15" ios.position="right" text="♥ History" android.position="popup"></ActionItem>
+    <ActionItem tap="onSetting" ios.systemIcon="14" ios.position="right" text="♥ Setting" android.position="popup"></ActionItem>
+
+    <!--<StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left">-->
+        <!--<Label text="@Dict"  class="action-label" orientation="center"></Label>-->
+    <!--</StackLayout>-->
+    
+</ActionBar>
+
+
 
 <StackLayout orientation="vertical">
-    <ActionBar title="Test View Main 2" > </ActionBar>
-    <Button text="test"></Button>
-    <StackLayout dock="top" orientation="horizontal" backgroundColor="red">
+
+    <StackLayout orientation="horizontal">
         <TextField [(ngModel)]="word_search" hint="Engworld" width="80%" class="input-text" ></TextField>
         <Button text="+" (tap)="btnInsert()" width="9.5%" class="btn-main-insert"></Button>
         <Button text="-" (tap)="btnDelete()" width="10%" class="btn-main-delete"></Button>
     </StackLayout>
 
     
+    <Button text="Search" (tap)="getItemSelect()" ></Button>
+    <Label [text]="word_search"></Label>
+    <ListView [items]="word_list2"  (itemTap)="onItemTap($event)" *ngIf="viewCheck == 1">
+		    <template let-item="item" let-i="index">
+	            <StackLayout orientation="horizontal"> 
+                    
+	            	<Label text="{{item.wordThai}} " class="bold" ></Label>
+                    <Label [text]="item.wordEng" ></Label>
+				</StackLayout>
+	        </template>
+	</ListView>
     
-    
-        <Button  text="fill" style="background-color: wheat; " width="100%" ></Button>
-    
-  
 
 
-
-
-
-
-    <StackLayout orientation="horizontal" backgroundColor="blue" height="auto">
-        <Button text="&lt;" width="50" backgroundColor="gray"  ></Button>
-        <Button text="reactions" width="71%" backgroundColor="darkgray" ></Button>
-        <Button text="&gt;" width="50" backgroundColor="gray" ></Button>
+    <StackLayout orientation="vertical" *ngIf="viewCheck == 0">
+        <Label [text]="eng_rand" ></Label>
+        <Label [text]="type_rand"></Label>
+        <Label [text]="thai_rand"></Label>
     </StackLayout>
 
+    <Button text="fetch" (tap)="fetch2()" ></Button>
+    <Button text="random" (tap)="btnSelectRandom()" ></Button>
+
+    
 </StackLayout>

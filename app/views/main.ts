@@ -26,7 +26,10 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
     word_search ="";     //ngModule input word search
     
     word_list = [];     //list sql temp 
-    word_search_sql = "";   //output on sqlll
+    word_sql = "";   //output on sql
+
+
+    private viewCheck = 0; // เช็คว่า เป็นส่วนไหน 0-random , 1-Search , 2-Facvortie , 3-History
 
     
     
@@ -125,6 +128,7 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
 
     private fetch2(){
         let self = this;
+        self.viewCheck = 1;
         console.log("Go to ===> fetch");
         this.database.all("SELECT * FROM dict").then(rows =>{
             console.log(rows);
@@ -209,7 +213,7 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
     ngOnInit(): void {
         let self = this;
 		//self.getItem();
-        self.pushList(self.word_list);
+        //self.pushList(self.word_list);
     }
 
     getItem(){
@@ -237,6 +241,9 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
 
     getItemSelect(){
         let self = this;
+
+        self.viewCheck = 1 ;
+
         var search = self.word_search;
         if (search == ""){
             alert("มีช่องว่างนะไอ้โง่ .....");
@@ -252,7 +259,7 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
                     self.word_search = "";
                 }
                 
-                self.word_search_sql = rows;
+                self.word_sql = rows;
                 self.refeshList();
                 self.pushList(rows);
                 //self.refeshList();
@@ -265,18 +272,54 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
 
     }
 
+    getItemFavorite(){
+        let self = this;
+        self.viewCheck = 1;
+
+
+        let strSQL = "SELECT * FROM dict WHERE favorite = 1";
+        self.database.all(strSQL).then(result => {
+            self.word_sql = result;
+            self.refeshList();
+            self.pushList(self.word_sql);
+        },error =>{
+            console.log("SELECT Favoirite Error => " , error);
+            
+        })
+
+    }
+
+    getItemHistory(){
+        let self = this;
+        self.viewCheck = 1;
+        
+        let strSQL = "SELECT h.word_id , d.engWorld , d.thaiWorld , d.type , d.favorite FROM HISTORY h join dict d on h.word_id = d.id ORDER BY h.id DESC";
+        self.database.all(strSQL).then(result => {
+            self.word_sql = result;
+             self.refeshList();
+             self.pushList(self.word_sql);
+        },error =>{
+            console.log("SELECT History Error => " , error);
+            
+        })
+    }
+
     btnSelectRandom(){
+
         //console.log("Select Random");
 
-        this.database.all("SELECT * FROM dict ORDER BY RANDOM() LIMIT 1").then(rows =>{
+        let self = this;
+        self.viewCheck = 0 ;
+        self.refeshList();
+        self.database.all("SELECT * FROM dict ORDER BY RANDOM() LIMIT 1").then(rows =>{
             console.log(rows);
             
             console.log("eng_word ==> " , rows[0][1]); // result eng
-            this.eng_rand = rows[0][1];
+            self.eng_rand = rows[0][1];
             console.log("thai_word ==> " , rows[0][2]); //result thai
-            this.thai_rand = rows[0][2];
+            self.thai_rand = rows[0][2];
             console.log("type word ==> " , rows[0][3]); //result type
-            this.type_rand = rows[0][3];
+            self.type_rand = rows[0][3];
         
 
         },error =>{
