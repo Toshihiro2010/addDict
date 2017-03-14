@@ -370,10 +370,13 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
         };
         this.router.navigate(["list-detail"], navigationExtras);
     }
-    
-    
 
+    onSetting(){
+        console.log("Check == > " , " onSetting");
+        this.router.navigate(["login"]),{
+            
+        }
     
-
-
+    }
+    
  }

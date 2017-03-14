@@ -18,7 +18,7 @@ import { FavoriteComponent } from "./views/favorite/favorite-component";
 
 
 const routes: Routes = [
-    { path: "", redirectTo: "main", pathMatch: "full" },
+    { path: "", redirectTo: "login", pathMatch: "full" },
     { path: "insert" , component : Inserts },
     { path: "main" , component : ViewComponent},
     { path: "sample" , component : AppComponent},
@@ -30,6 +30,7 @@ const routes: Routes = [
     { path: "list-detail" , component:ListDetailComponent},
     { path: "history" , component:HistoryComponent },
     { path: "favorite" , component : FavoriteComponent}
+
 ];
 
 @NgModule({

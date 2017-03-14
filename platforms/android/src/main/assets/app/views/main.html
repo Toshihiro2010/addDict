@@ -7,7 +7,7 @@
     
     <ActionItem (tap)="getItemFavorite()" ios.systemIcon="16" ios.position="right" text="♥ Favorite" android.position="popup"></ActionItem>
     <ActionItem (tap)="getItemHistory()" ios.systemIcon="15" ios.position="right" text="♥ History" android.position="popup"></ActionItem>
-    <ActionItem tap="onSetting" ios.systemIcon="14" ios.position="right" text="♥ Setting" android.position="popup"></ActionItem>
+    <ActionItem tap="onSetting()" ios.systemIcon="14" ios.position="right" text="♥ Setting" android.position="popup"></ActionItem>
 
     <!--<StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left">-->
         <!--<Label text="@Dict"  class="action-label" orientation="center"></Label>-->
@@ -27,7 +27,7 @@
 
     
     <Button text="Search" (tap)="getItemSelect()" ></Button>
-    <Label [text]="word_search"></Label>
+    
     <ListView [items]="word_list2"  (itemTap)="onItemTap($event)" *ngIf="viewCheck == 1">
 		    <template let-item="item" let-i="index">
 	            <StackLayout orientation="horizontal"> 
