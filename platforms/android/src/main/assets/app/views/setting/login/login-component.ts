@@ -21,16 +21,25 @@ export class LoginComponent {
         var checkEmpty = self.checkEmpty();
         console.log("empty word  ==>" , checkEmpty);
         if( checkEmpty == true){
+
             http.request({ 
-                url: self.strURL +"/users/"+self.username , 
+                url: self.strURL +"/login/"+ self.username + "/"+self.password, 
                 method: "GET" 
             }).then(function (response) {
                 var statusCode = response.statusCode;
                 if(statusCode != 200){
-                    
+
+                    var toast = Toast.makeText("ไม่มี user และ password นี้ในระบบ");
+                    toast.show();
+
                 }else{
-                    var obj = response.content.toJSON();
-                    console.log(JSON.stringify(obj));
+                    try {
+                        var obj = response.content.toJSON();
+                        console.log(JSON.stringify(obj));
+                    }
+                    catch(err) {
+                        console.log(err);
+                    }
                 }
                 console.log("status code => " , statusCode);
                 
