@@ -14,7 +14,7 @@ var Sqlite = require("nativescript-sqlite");
     selector: "ns-app",
     templateUrl: "views/main.html",
 })
-export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit {
+export class ViewComponent implements OnInit , AfterViewInit {
 
     private database : any;
 
@@ -69,10 +69,11 @@ export class ViewComponent implements OnInit , AfterViewChecked , AfterViewInit 
         //this.items = new Item();
     }
 
-    ngAfterViewChecked(){
+    /*ngAfterViewChecked(){
         console.log("ng ngAfterViewChecked");
         
-    }
+    }*/
+
     ngAfterViewInit(){
         console.log("ng==========> AfterViewInit");
         

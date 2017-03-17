@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 import { User } from "../../../shared/myFunction1";
 import { Router, NavigationExtras , Route } from "@angular/router"; 
-
+import { RouterExtensions } from "nativescript-angular/router";
 
 
 var http = require("http");
 var Toast = require("nativescript-toast");
+
 
 @Component({
     selector: "Login",
@@ -19,7 +20,7 @@ export class LoginComponent {
 
     private strURL : string = "http://192.9.9.112:30";
 
-    constructor(private router: Router ){
+    constructor(private router: Router , private routerExtensions : RouterExtensions ){
         let self = this;
         
     }
@@ -44,7 +45,7 @@ export class LoginComponent {
                 }else{
                     var obj = response.content.toJSON();
                     console.log(JSON.stringify(obj));
-                    self.router.navigate(["./main"]);
+                    self.routerExtensions.navigate(["./main"], { clearHistory: true });
                     //self.routerExtensions.navigate(["user/list"], { clearHistory: true });
                 }//end else statusCode
               
