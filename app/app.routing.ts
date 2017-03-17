@@ -14,11 +14,12 @@ import { ViewItem } from "./views/views-item/view-item";
 import { ListDetailComponent } from "./views/list-detail/detail";
 import { HistoryComponent } from "./views/history/history-component";
 import { FavoriteComponent } from "./views/favorite/favorite-component";
+import { SettingComponent } from "./views/setting/setting-component";
 
 
 
 const routes: Routes = [
-    { path: "", redirectTo: "login", pathMatch: "full" },
+    { path: "", redirectTo: "main", pathMatch: "full" },
     { path: "insert" , component : Inserts },
     { path: "main" , component : ViewComponent},
     { path: "sample" , component : AppComponent},
@@ -29,7 +30,8 @@ const routes: Routes = [
     { path: "view-list" , component: ViewItem },
     { path: "list-detail" , component:ListDetailComponent},
     { path: "history" , component:HistoryComponent },
-    { path: "favorite" , component : FavoriteComponent}
+    { path: "favorite" , component : FavoriteComponent},
+    { path: "setting" , component: SettingComponent}
 
 ];
 

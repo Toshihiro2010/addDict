@@ -1,5 +1,5 @@
 import { Component, OnInit ,AfterViewChecked , AfterViewInit  } from "@angular/core";
-import {Router, NavigationExtras} from "@angular/router"; 
+import { Router, NavigationExtras } from "@angular/router"; 
 import listViewModule = require("ui/list-view");
 
 import { Item } from "../models/items/item";

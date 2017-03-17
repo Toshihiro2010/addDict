@@ -35,7 +35,7 @@ export class ListDetailComponent implements OnInit {
         console.log(self.word.wordType);
         console.log(self.word.wordFavorite);
         
-        self.favorite = self.word.wordFavorite; // ให้ favorite = 
+        self.favorite = self.word.wordFavorite; // ให้ favorite
         
         let temp = self.word.wordType;
         self.word.wordType = self.changWordType(temp);

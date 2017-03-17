@@ -2,6 +2,6 @@
     <TextField hint="ID:" [(ngModel)]="username" ></TextField>
     <TextField hint="PASSWORD:" [(ngModel)]="password" ></TextField>
 
-    <Button text="LOGIN" (tap)="btnLogin()"></Button>
+    <Button text="LOGIN" (tap)="btnLogin()" clearHistory="true"></Button>
     <Button text="Check" (tap)="btnCheck()"></Button>
 </StackLayout>

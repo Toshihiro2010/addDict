@@ -17,7 +17,9 @@ import { ViewItem } from "./views/views-item/view-item";
 import { ListDetailComponent } from "./views/list-detail/detail";
 import { HistoryComponent } from "./views/history/history-component";
 import { FavoriteComponent } from "./views/favorite/favorite-component";
+import { SettingComponent } from "./views/setting/setting-component";
 
+import { UserService } from "./shared/user.service";
 
 
 //import { AppComponent } from "./app.component";
@@ -46,11 +48,12 @@ import { FavoriteComponent } from "./views/favorite/favorite-component";
         ViewItem,
         ListDetailComponent,
         HistoryComponent,
-        FavoriteComponent
+        FavoriteComponent,
+        SettingComponent
         
     ],
     providers: [
-   
+        UserService,
     ],
     schemas: [
         NO_ERRORS_SCHEMA

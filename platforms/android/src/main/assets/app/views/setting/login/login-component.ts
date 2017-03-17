@@ -1,5 +1,7 @@
 import { Component } from "@angular/core";
-import { Users } from "../../../models/users/users";
+import { User } from "../../../shared/myFunction1";
+import { Router, NavigationExtras , Route } from "@angular/router"; 
+
 
 
 var http = require("http");
@@ -11,10 +13,16 @@ var Toast = require("nativescript-toast");
 })
 export class LoginComponent {
 
-    private username : string = "";
-    private password : string = "";
+    private username : string = "" ;
+    private password : string = "" ;
+  
 
     private strURL : string = "http://192.9.9.112:30";
+
+    constructor(private router: Router ){
+        let self = this;
+        
+    }
 
     private btnLogin(){
         let self = this;
@@ -26,29 +34,32 @@ export class LoginComponent {
                 url: self.strURL +"/login/"+ self.username + "/"+self.password, 
                 method: "GET" 
             }).then(function (response) {
-                var statusCode = response.statusCode;
-                if(statusCode != 200){
 
+                var statusCode = response.statusCode;
+                console.log("status code => " , statusCode);
+                if(statusCode != 200){
                     var toast = Toast.makeText("ไม่มี user และ password นี้ในระบบ");
                     toast.show();
 
                 }else{
-                    try {
-                        var obj = response.content.toJSON();
-                        console.log(JSON.stringify(obj));
-                    }
-                    catch(err) {
-                        console.log(err);
-                    }
-                }
-                console.log("status code => " , statusCode);
+                    var obj = response.content.toJSON();
+                    console.log(JSON.stringify(obj));
+                    self.router.navigate(["./main"]);
+                    //self.routerExtensions.navigate(["user/list"], { clearHistory: true });
+                }//end else statusCode
+              
                 
             }, function (e) {//// Argument (e) is Error!
                 console.log("error is " , e);  
             });
-        }
+        }// End if checkEmpty
         
     }
+
+    private myResultReturn(){
+
+    }
+
     private btnCheck(){
         let self = this;
         var result;
