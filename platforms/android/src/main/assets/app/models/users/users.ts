@@ -1,7 +1,7 @@
 export class Users{
     id : number;
-    username : string ;
-    password : string ;
+    username : String ;
+    password : String ;
     name : String ; 
     status : number;
 }

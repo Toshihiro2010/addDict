@@ -45,6 +45,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 //this.insert();
                 this.fetch();
                 this.createHistory();
+                this.createMyUser();
                 this.btnSelectRandom();
             },error =>{
                 
@@ -88,6 +89,15 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 },error =>{
                     console.log("CREATE TABLE HISTORY ERROR" , error);
                 })
+    }
+    public createMyUser(){
+        let self = this;
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS USERS (id INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT , name TEXT , status INTEGER , login INTEGER DEFAULT 0 )").then(id =>{
+                    self.database = self.database;
+                    console.log("CREATE USERS Success");
+                },error =>{
+                    console.log("CREATE TABLE USERS ERROR" , error);
+                });
     }
     
 
@@ -374,7 +384,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
     onSetting(){
         console.log("Check == > " , " onSetting");
-        this.router.navigate(["login"]),{
+        this.router.navigate(["setting"]),{
             
         }
     
