@@ -1,7 +1,12 @@
-<StackLayout orientation="vertical">
+<StackLayout orientation="vertical" *ngIf="status_login == 0">
     <TextField hint="ID:" [(ngModel)]="username" ></TextField>
     <TextField hint="PASSWORD:" [(ngModel)]="password" ></TextField>
 
     <Button text="LOGIN" (tap)="btnLogin()"></Button>
+    <!--<Button text="Check" (tap)="btnCheck()"></Button>-->
+</StackLayout>
+
+<StackLayout orientation="vertical" *ngIf="status_login == 1">
+    <Button text="LogOut" (tap)="btnLogout()"></Button>
     <!--<Button text="Check" (tap)="btnCheck()"></Button>-->
 </StackLayout>

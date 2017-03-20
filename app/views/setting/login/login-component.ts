@@ -19,6 +19,8 @@ export class LoginComponent {
     private username : string = "" ;
     private password : string = "" ;
     private database : any;
+    private status_login = 0;
+
 
     private user = [] ;
 
@@ -55,6 +57,7 @@ export class LoginComponent {
                 }else{
                     var obj = response.content.toJSON();
                     //obj = JSON.stringify(obj);
+                    //self.rejectList();
                     self.objToDatabase(obj);
                     //self.routerExtensions.navigate(["./main"], { clearHistory: true });
                     //self.routerExtensions.navigate(["user/list"], { clearHistory: true });
@@ -67,9 +70,18 @@ export class LoginComponent {
         }// End if checkEmpty
         
     }
+    
+    private rejectList(){
+        let self = this;
+        let temp = self.user.length;
+        for(var i = 0 ; i < temp; i++){
+            self.user.pop();
+        }
+    }
 
     private objToDatabase(objUSer){
         let self = this;
+        self.status_login = 1;
         console.log(objUSer);
         
         let model_user = new Users();
@@ -78,13 +90,16 @@ export class LoginComponent {
         model_user.name = objUSer[0].name;
         model_user.status = objUSer[0].status;
         
-        self.user.push(model_user);
-        console.log("object user stringdify => " , JSON.stringify(self.user));
-        let temp_username = self.user[0].username;
+        let temp_id = model_user.id;
+        let temp_username = model_user.username;
+        let temp_name = model_user.name;
+        let temp_status = model_user.status;
 
+        console.log("object user stringdify => " , JSON.stringify(model_user));
+        
         self.database.all("SELECT * FROM USERS WHERE username = (?)",[temp_username]).then(rows =>{
             if(rows ==""){
-                self.myInsertUser();
+                self.myInsertUser(model_user);
             }else{
                 self.myChangUser(temp_username);
             }
@@ -93,11 +108,17 @@ export class LoginComponent {
         })
     }
 
-    private myInsertUser(){
+    private btnLogout(){
+        let self = this;
+        console.log("botton Logout => ");
+        self.status_login = 0;
+    }
+
+    private myInsertUser(model_user){
         let self = this;
         console.log("My inert user =>");
         self.database.execSQL("INSERT INTO USERS (id , username , name , status , login ) VALUES (? , ? , ? , ? , ?)", 
-        [self.user[0].id ,self.user[0].username , self.user[0].name , self.user[0].status , 1 ]).then(word_insert => {
+        [model_user.id ,model_user.username , model_user.name , model_user.status , 1 ]).then(word_insert => {
                 console.log("INSERT RESULT => " , word_insert  );
                 }, error => {
                     console.log("INSERT ERROR => " , error);
@@ -108,7 +129,7 @@ export class LoginComponent {
     private myChangUser(arg){
         console.log("My chang User => " , arg);
         let self = this;
-        
+
         self.database.execSQL("UPDATE USERS SET login = 1 WHERE id = (?) " ,[arg] , function(err , db ){
             if(err){
                 console.log("error is == > " , err);
