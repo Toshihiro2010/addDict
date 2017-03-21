@@ -3,13 +3,13 @@ import { Router, NavigationExtras } from "@angular/router";
 import listViewModule = require("ui/list-view");
 
 import { Item } from "../models/items/item";
-
+  
 
 var Sqlite = require("nativescript-sqlite");
-
-
-
-
+import { RouterExtensions } from "nativescript-angular";
+    import * as application from "application";
+    import { AndroidApplication, AndroidActivityBackPressedEventData } from "application";
+    import { isAndroid } from "platform";
 @Component({
     selector: "ns-app",
     templateUrl: "views/main.html",
@@ -35,7 +35,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
     
 
     public constructor(private router: Router ){
-
+        console.log("5555555555555555555555555555555555555555555555555555555");
         
         //Code ตอนที่ไม่มีอะไรเลย เริ่มสร้างจาก 1
         (new Sqlite("dicts.db")).then(db => {
@@ -71,7 +71,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
     }
 
     /*ngAfterViewChecked(){
-        console.log("ng ngAfterViewChecked");
+        console.lg("ng ngAfterViewChecked");
         
     }*/
 
@@ -119,7 +119,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
         console.log("Go to ===> fetch");
         self.database.all("SELECT * FROM dict").then(rows =>{
-            console.log(rows);
+            //console.log(rows);
             self.word_list = rows;
             /*for(var row in rows){
                 console.log("Result ==v");
@@ -130,7 +130,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 console.log("type word ==> " , rows[row][3]); //result thai
             }*/
             for(var i=0 ; i < rows.length ; i++ ){
-                    console.log("result ==>" , rows[i]); 
+                    //console.log("result ==>" , rows[i]); 
                 }    
         },error =>{
             console.log("SELECT ERROR " , error);
@@ -140,9 +140,9 @@ export class ViewComponent implements OnInit , AfterViewInit {
     private fetch2(){
         let self = this;
         self.viewCheck = 1;
-        console.log("Go to ===> fetch");
+        console.log("Go to ===> fetch 2");
         this.database.all("SELECT * FROM dict").then(rows =>{
-            console.log(rows);
+            //console.log(rows);
             this.word_list = rows;
             /*for(var row in rows){
                 console.log("Result ==v");
@@ -153,7 +153,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 console.log("type word ==> " , rows[row][3]); //result thai
             }*/
             for(var i=0 ; i < rows.length ; i++ ){
-                    console.log("result ==>" , rows[i]); 
+                    //console.log("result ==>" , rows[i]); 
                 }
             self.refeshList();
             self.pushList(rows);
@@ -163,6 +163,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("SELECT ERROR " , error);
         })
     }
+
 
     btnInsert(){
         console.log("click btnInsert");
@@ -223,8 +224,17 @@ export class ViewComponent implements OnInit , AfterViewInit {
     //  function use for listview
     ngOnInit(): void {
         let self = this;
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 		//self.getItem();
         //self.pushList(self.word_list);
+
+          if (!isAndroid) {
+          return;
+        }
+        application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
+             console.log('AndroidApplication.activityBackPressedEvent');
+          this.fetch2();
+        });
     }
 
     getItem(){
@@ -356,7 +366,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let rows = args;
 
         for(var row in rows){
-            console.log(rows[row]);
+            //console.log(rows[row]);
             let model_item : Item = new Item();
             model_item.id = rows[row][0];
             model_item.wordEng = rows[row][1];

@@ -24,7 +24,7 @@ export class LoginComponent {
 
     private user = [] ;
 
-    private strURL : string = "http://192.9.9.112:30";
+    private strURL : string = "http://192.168.3.93:30";
 
     constructor(private router: Router , private routerExtensions : RouterExtensions ){
         let self = this;
