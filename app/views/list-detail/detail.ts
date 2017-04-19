@@ -6,6 +6,8 @@ import { Item } from "../../models/items/item";
 
 var dialogs = require("ui/dialogs");
 var Sqlite = require("nativescript-sqlite");
+var http = require("http");
+
 
 @Component({
     selector: "ns-app",
@@ -15,6 +17,9 @@ export class ListDetailComponent implements OnInit {
  
     word:Item;      //word ที่ได้รับเข้ามาจาก lsit main
     favorite : any ;    // button output show on layout
+
+    private google_url = "http://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=";
+
 
 
 
@@ -190,6 +195,14 @@ export class ListDetailComponent implements OnInit {
             return word;
         }    
         
+    }
+
+    private sound_play(){
+        console.log("Click Sound");
+    
+        let self = this;
+
+
     }
 
    

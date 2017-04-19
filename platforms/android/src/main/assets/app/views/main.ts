@@ -1,4 +1,4 @@
-import { Component, OnInit ,AfterViewChecked , AfterViewInit  } from "@angular/core";
+import { Component, OnInit  , AfterViewInit  } from "@angular/core";
 import { Router, NavigationExtras } from "@angular/router"; 
 import listViewModule = require("ui/list-view");
 
@@ -6,10 +6,12 @@ import { Item } from "../models/items/item";
   
 
 var Sqlite = require("nativescript-sqlite");
+
 import { RouterExtensions } from "nativescript-angular";
-    import * as application from "application";
-    import { AndroidApplication, AndroidActivityBackPressedEventData } from "application";
-    import { isAndroid } from "platform";
+import * as application from "application";
+import { AndroidApplication, AndroidActivityBackPressedEventData } from "application";
+import { isAndroid } from "platform";
+    
 @Component({
     selector: "ns-app",
     templateUrl: "views/main.html",
@@ -55,25 +57,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         },error =>{
             console.log("OPEN DB ERROR" , error);
         })
-
-        //เรียกใช้ database ที่มีอยู่แล้วชื่อ dicts.db
-        /*new Sqlite("dicts.db").then(db =>{
-            this.database = db;
-            console.log("Open database Success")
-            
-        },error =>{
-            console.log("Open DB ERROR" , error);
-        })
-        */
-
-        //this.btnSelectRandom();
-        //this.items = new Item();
     }
-
-    /*ngAfterViewChecked(){
-        console.lg("ng ngAfterViewChecked");
-        
-    }*/
 
     ngAfterViewInit(){
         console.log("ng==========> AfterViewInit");
@@ -228,7 +212,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 		//self.getItem();
         //self.pushList(self.word_list);
 
-          if (!isAndroid) {
+        if (!isAndroid) {
           return;
         }
         application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
