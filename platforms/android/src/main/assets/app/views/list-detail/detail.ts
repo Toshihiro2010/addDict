@@ -3,28 +3,33 @@ import { PageRoute } from "nativescript-angular/router";
 import { Router } from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { Item } from "../../models/items/item";
+import { Observable } from 'data/observable';
+import * as fs from "file-system";  //เรียกใช้เพื่อเข้าถึง uri
 
 var dialogs = require("ui/dialogs");
 var Sqlite = require("nativescript-sqlite");
+var http = require("http");
+var sound = require("nativescript-sound"); //เรียกใช้ plugin sound
+
 
 @Component({
     selector: "ns-app",
     templateUrl: "views/list-detail/detail.html",
 })
-export class ListDetailComponent implements OnInit {
+export class ListDetailComponent extends Observable implements OnInit {
  
     word:Item;      //word ที่ได้รับเข้ามาจาก lsit main
     favorite : any ;    // button output show on layout
 
-
-
+    private url = "http://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=";// link สำหรับ load ไฟล์จาก google traslate
     private database; // ตัวแปร Database
+    private play_word; // เล่นเสียง word
+
 
      public constructor(private route: ActivatedRoute) {
+        super();
 
         let self = this;
-
-
         this.route.queryParams.subscribe(params => {
         console.log(JSON.stringify(params) );
         self.word = JSON.parse(params["words"]); // ให้ตัวแปร self.word รับค่าจาก list main ด้วยรูป json โดยส่งมาในชื่อ words ด้วยคำสั่ง params["words"]
@@ -40,10 +45,11 @@ export class ListDetailComponent implements OnInit {
         let temp = self.word.wordType;
         self.word.wordType = self.changWordType(temp);
         console.log(self.word.wordType);
-        
-        
 
-
+        self.url = self.url + self.word.wordEng;//set word สำหรับค้นหา googletraslate
+        self.setButtonSound(self.url);
+        
+        //เรียกเปิดใช้ Database
         new Sqlite("dicts.db").then(db =>{
             this.database = db;
             console.log("Open database Success");
@@ -189,6 +195,44 @@ export class ListDetailComponent implements OnInit {
             word = "[" + word + "]";
             return word;
         }    
+        
+    }
+
+    private sound_play(){
+        console.log("Click Sound");
+        let self = this;
+        self.play_word.play();
+
+
+    }
+
+    private setButtonSound(arg){
+        console.log("Set button Sound");
+        let self = this;
+        let word = arg;
+
+        let documents = fs.knownFolders.documents();
+        let my_path = documents.getFolder("mySound");
+        var filePath = fs.path.join(my_path.path, "test.mp3");
+
+        http.getFile({ url: self.url,
+                    method: "GET",
+                    headers: {
+                        "Referer" : 'http://translate.google.com/',
+                        "User-Agent" : 'stagefright/1.2 (Linux;Android 5.0)',
+                        "Content-Type": 'audio/mpeg'
+                }
+                },filePath).then(function (r) {
+            //// Argument (response) is HttpResponse!
+            console.log(JSON.stringify(r.path));
+            self.play_word = sound.create(r.path);
+        }, function (e) {
+            console.log("error => " , e);
+            
+        });
+
+
+
         
     }
 

@@ -25,7 +25,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
     type_rand ="";  //word type Random show on layout
     word_list2 = [];    //list show on layout
 
-    word_search ="";     //ngModule input word search
+    word_search ="";     //ngModule input word search-
     
     word_list = [];     //list sql temp 
     word_sql = "";   //output on sql
