@@ -37,26 +37,38 @@ export class ViewComponent implements OnInit , AfterViewInit {
     
 
     public constructor(private router: Router ){
-        console.log("5555555555555555555555555555555555555555555555555555555");
-        
+        let self = this;
+
         //Code ตอนที่ไม่มีอะไรเลย เริ่มสร้างจาก 1
         (new Sqlite("dicts.db")).then(db => {
-            db.execSQL("CREATE TABLE IF NOT EXISTS dict (id INTEGER PRIMARY KEY AUTOINCREMENT, engWorld TEXT, thaiWorld TEXT ,type TEXT DEFAULT 'Noun',favorite NUMBER DEFAULT 0 , sTime DATE DEFAULT Null )").then(id =>{
-                this.database = db;
-                console.log("CREAT TABLE ===> Success ");
-                //this.insert();
-                this.fetch();
+                self.database = db;
+                //this.fetch();
                 this.createHistory();
                 this.createMyUser();
-                this.btnSelectRandom();
-            },error =>{
-                
-                console.log("CREATE TABLE ERROR" , error);
-            }
-        )   
+                //this.btnSelectRandom();
         },error =>{
             console.log("OPEN DB ERROR" , error);
         })
+
+        
+    }
+
+    
+
+    //  function use for listview
+    ngOnInit(): void {
+        let self = this;
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+		//self.getItem();
+        //self.pushList(self.word_list);
+
+        if (!isAndroid) {
+          return;
+        }
+        application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
+             console.log('AndroidApplication.activityBackPressedEvent');
+          this.fetch2();
+        });
     }
 
     ngAfterViewInit(){
@@ -65,23 +77,32 @@ export class ViewComponent implements OnInit , AfterViewInit {
     }
     
 
-    public createHistory(){
+    private createHistory(){
         let self = this;
         self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
-                    self.database = self.database;
-                    console.log("CREATE HISTORY Success");
-                },error =>{
-                    console.log("CREATE TABLE HISTORY ERROR" , error);
-                })
+            self.database = self.database;
+            console.log("CREATE HISTORY Success");
+        },error =>{
+            console.log("CREATE TABLE HISTORY ERROR" , error);
+        })
     }
-    public createMyUser(){
+    private createFavorite(){   
+        let self = this;
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
+            self.database = self.database;
+            console.log("CREATE HISTORY Success");
+        },error =>{
+             console.log("CREATE TABLE HISTORY ERROR" , error);
+        })
+    }
+    private createMyUser(){
         let self = this;
         self.database.execSQL("CREATE TABLE IF NOT EXISTS USERS (id INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT , name TEXT , status INTEGER , login INTEGER DEFAULT 0 )").then(id =>{
-                    self.database = self.database;
-                    console.log("CREATE USERS Success");
-                },error =>{
-                    console.log("CREATE TABLE USERS ERROR" , error);
-                });
+            self.database = self.database;
+            console.log("CREATE USERS Success");
+        },error =>{
+             console.log("CREATE TABLE USERS ERROR" , error);
+        });
     }
     
 
@@ -90,12 +111,11 @@ export class ViewComponent implements OnInit , AfterViewInit {
     public insert(){
         let self = this;
         self.database.execSQL("INSERT INTO dict (engWorld, thaiWorld) VALUES (?,?)", ["red" ,"แดง"]).then(all_word => {
-                console.log("INSERT RESULT => " , all_word  );
-         
-                self.fetch();
-            }, error => {
+            console.log("INSERT RESULT => " , all_word  );
+            self.fetch();
+        }, error => {
             console.log("INSERT ERROR => " , error);
-            });
+        });
     }
 
     public fetch(){
@@ -103,16 +123,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
         console.log("Go to ===> fetch");
         self.database.all("SELECT * FROM dict").then(rows =>{
-            //console.log(rows);
             self.word_list = rows;
-            /*for(var row in rows){
-                console.log("Result ==v");
-            
-                console.log("result all ==> " , rows[row]);//result all
-                console.log("eng_word ==> " , rows[row][1]); // result eng
-                console.log("thai_word ==> " , rows[row][2]); //result thai
-                console.log("type word ==> " , rows[row][3]); //result thai
-            }*/
             for(var i=0 ; i < rows.length ; i++ ){
                     //console.log("result ==>" , rows[i]); 
                 }    
@@ -128,21 +139,13 @@ export class ViewComponent implements OnInit , AfterViewInit {
         this.database.all("SELECT * FROM dict").then(rows =>{
             //console.log(rows);
             this.word_list = rows;
-            /*for(var row in rows){
-                console.log("Result ==v");
-            
-                console.log("result all ==> " , rows[row]);//result all
-                console.log("eng_word ==> " , rows[row][1]); // result eng
-                console.log("thai_word ==> " , rows[row][2]); //result thai
-                console.log("type word ==> " , rows[row][3]); //result thai
-            }*/
+           
             for(var i=0 ; i < rows.length ; i++ ){
-                    //console.log("result ==>" , rows[i]); 
+                    
                 }
             self.refeshList();
             self.pushList(rows);
-            //self.refeshList();
-            //self.pushList(rows);   
+            
         },error =>{
             console.log("SELECT ERROR " , error);
         })
@@ -203,23 +206,6 @@ export class ViewComponent implements OnInit , AfterViewInit {
          
     }
 
-
-
-    //  function use for listview
-    ngOnInit(): void {
-        let self = this;
-        console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-		//self.getItem();
-        //self.pushList(self.word_list);
-
-        if (!isAndroid) {
-          return;
-        }
-        application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
-             console.log('AndroidApplication.activityBackPressedEvent');
-          this.fetch2();
-        });
-    }
 
     getItem(){
         console.log("GET ITEM ================> ");

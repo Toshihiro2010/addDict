@@ -48,7 +48,7 @@ export class Inserts implements OnDestroy  {
         console.log("Check click ==>");
         console.log("eng_word ======> " + this.eng_word);
         console.log("thai_word ======> " + this.thai_word);
-        //TODO insert Thai_word , eng_word
+        //TODO insert Thai_word , eng_wor
 
         if(this.eng_word =="" || this.thai_word =="" ){
             var toast = Toast.makeText("มีช่องว่างนะไอ้โง่");

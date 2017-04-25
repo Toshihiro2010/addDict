@@ -32,6 +32,22 @@ export class SettingComponent {
 
     //***************************************************************************************************
 
+    private btnCheck(){
+        let self = this;
+
+    }
+    private btnEngToThai(){
+        console.log("Button => EngToThai");
+        let self = this;
+        
+    }
+
+    private btnEngToEng(){
+        console.log("Button => EngToEng");
+        let self = this;
+        
+    }
+
     
      
 
