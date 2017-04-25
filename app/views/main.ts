@@ -43,12 +43,14 @@ export class ViewComponent implements OnInit , AfterViewInit {
         (new Sqlite("dicts.db")).then(db => {
                 self.database = db;
                 //this.fetch();
-                this.createHistory();
-                this.createMyUser();
+                self.createHistory();
+                self.createMyUser();
+                self.createFavorite();
                 //this.btnSelectRandom();
         },error =>{
             console.log("OPEN DB ERROR" , error);
         })
+        
 
         
     }
@@ -88,11 +90,11 @@ export class ViewComponent implements OnInit , AfterViewInit {
     }
     private createFavorite(){   
         let self = this;
-        self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS FAVORITE (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
             self.database = self.database;
-            console.log("CREATE HISTORY Success");
+            console.log("CREATE FAVORITE Success");
         },error =>{
-             console.log("CREATE TABLE HISTORY ERROR" , error);
+             console.log("CREATE TABLE FAVORITE ERROR" , error);
         })
     }
     private createMyUser(){
