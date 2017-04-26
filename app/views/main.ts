@@ -3,14 +3,14 @@ import { Router, NavigationExtras } from "@angular/router";
 import listViewModule = require("ui/list-view");
 
 import { Item } from "../models/items/item";
-  
-
-var Sqlite = require("nativescript-sqlite");
 
 import { RouterExtensions } from "nativescript-angular";
 import * as application from "application";
 import { AndroidApplication, AndroidActivityBackPressedEventData } from "application";
 import { isAndroid } from "platform";
+
+var Sqlite = require("nativescript-sqlite");
+var fs = require("file-system");
     
 @Component({
     selector: "ns-app",
@@ -19,6 +19,9 @@ import { isAndroid } from "platform";
 export class ViewComponent implements OnInit , AfterViewInit {
 
     private database : any;
+    private db_EngToThai : any ;
+    private db_EngToEng : any ;
+
 
     eng_rand ="";   //word eng Random show on layout
     thai_rand = ""; //word thai Random show on layout
@@ -38,6 +41,9 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
     public constructor(private router: Router ){
         let self = this;
+        let documents = fs.knownFolders.documents();
+        let my_path = documents.getFolder("database");
+        var my_db = my_path.getFile("EngToEng.db");
 
         //Code ตอนที่ไม่มีอะไรเลย เริ่มสร้างจาก 1
         (new Sqlite("dicts.db")).then(db => {
@@ -49,6 +55,14 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 //this.btnSelectRandom();
         },error =>{
             console.log("OPEN DB ERROR" , error);
+        })
+
+        new Sqlite(my_db.path).then(db =>{
+            self.db_EngToEng = db;
+            console.log("Open database Success");
+            
+        },error =>{
+            console.log("Open DB ERROR" , error);
         })
         
 
@@ -124,7 +138,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
         let self = this;
         console.log("Go to ===> fetch");
-        self.database.all("SELECT * FROM dict").then(rows =>{
+        self.database.all("SELECT * FROM db_EngToEng WHERE dict_no > 400 LIMit 10").then(rows =>{
             self.word_list = rows;
             for(var i=0 ; i < rows.length ; i++ ){
                     //console.log("result ==>" , rows[i]); 
@@ -138,7 +152,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
         self.viewCheck = 1;
         console.log("Go to ===> fetch 2");
-        this.database.all("SELECT * FROM dict").then(rows =>{
+        this.database.all("SELECT * FROM db_EngToEng WHERE dict_no > 400 LIMit 10").then(rows =>{
             //console.log(rows);
             this.word_list = rows;
            
