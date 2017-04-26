@@ -3,6 +3,8 @@ import { Router, NavigationExtras } from "@angular/router";
 import listViewModule = require("ui/list-view");
 
 import { Item } from "../models/items/item";
+import { WordItem } from "../models/items/items_word";
+import { MyDatabase } from "../models/myDb/myDB"
 
 import { RouterExtensions } from "nativescript-angular";
 import * as application from "application";
@@ -19,8 +21,8 @@ var fs = require("file-system");
 export class ViewComponent implements OnInit , AfterViewInit {
 
     private database : any;
-    private db_EngToThai : any ;
-    private db_EngToEng : any ;
+    private db_word = [] ;
+ 
 
 
     eng_rand ="";   //word eng Random show on layout
@@ -48,7 +50,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         //Code ตอนที่ไม่มีอะไรเลย เริ่มสร้างจาก 1
         (new Sqlite("dicts.db")).then(db => {
                 self.database = db;
-                //this.fetch();
+              
                 self.createHistory();
                 self.createMyUser();
                 self.createFavorite();
@@ -57,8 +59,10 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("OPEN DB ERROR" , error);
         })
 
+        self.myDb();
+
         new Sqlite(my_db.path).then(db =>{
-            self.db_EngToEng = db;
+            self.db_word = db;
             console.log("Open database Success");
             
         },error =>{
@@ -77,15 +81,53 @@ export class ViewComponent implements OnInit , AfterViewInit {
         console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 		//self.getItem();
         //self.pushList(self.word_list);
-
         if (!isAndroid) {
           return;
         }
         application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
-             console.log('AndroidApplication.activityBackPressedEvent');
-          this.fetch2();
+            console.log('AndroidApplication.activityBackPressedEvent');
+            this.fetch2();
         });
     }
+
+    myDb(){
+        let self = this;
+        console.log("in => self.mydb" );
+        
+        let doc = fs.knownFolders.documents();
+        let my_path = doc.getFolder("database");
+        console.log(JSON.stringify(my_path));
+
+        let temp = my_path.getEntitiesSync();
+        console.log("temp => " , JSON.stringify(temp));
+        for(let i in temp){
+            //console.log("i" , JSON.stringify(temp[i]));
+            let model_db : MyDatabase = new MyDatabase();
+
+            console.log("i" , temp[i].name);
+            console.log("i" , temp[i].extension);
+            if(temp[i].extension == ".db"){
+                //let temp2 = [temp[i].name , temp[i].path];
+
+                model_db.name = temp[i].name;
+                model_db.path = temp[i].path;
+
+                //let temp2 = [1][1];;
+                self.db_word.push(model_db);
+                
+            }  
+        }
+
+        if(self.db_word.length == 0){
+            console.log("Not DATABASE");
+            console.log(self.db_word);
+        }else{
+            console.log("Acces Database");
+            console.log(JSON.stringify(self.db_word));
+        }
+
+    }
+
 
     ngAfterViewInit(){
         console.log("ng==========> AfterViewInit");
@@ -102,15 +144,17 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("CREATE TABLE HISTORY ERROR" , error);
         })
     }
+
     private createFavorite(){   
         let self = this;
-        self.database.execSQL("CREATE TABLE IF NOT EXISTS FAVORITE (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS FAVORITE (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER )").then(id =>{
             self.database = self.database;
             console.log("CREATE FAVORITE Success");
         },error =>{
              console.log("CREATE TABLE FAVORITE ERROR" , error);
         })
     }
+
     private createMyUser(){
         let self = this;
         self.database.execSQL("CREATE TABLE IF NOT EXISTS USERS (id INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT , name TEXT , status INTEGER , login INTEGER DEFAULT 0 )").then(id =>{
@@ -128,31 +172,17 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
         self.database.execSQL("INSERT INTO dict (engWorld, thaiWorld) VALUES (?,?)", ["red" ,"แดง"]).then(all_word => {
             console.log("INSERT RESULT => " , all_word  );
-            self.fetch();
         }, error => {
             console.log("INSERT ERROR => " , error);
         });
     }
 
-    public fetch(){
-
-        let self = this;
-        console.log("Go to ===> fetch");
-        self.database.all("SELECT * FROM db_EngToEng WHERE dict_no > 400 LIMit 10").then(rows =>{
-            self.word_list = rows;
-            for(var i=0 ; i < rows.length ; i++ ){
-                    //console.log("result ==>" , rows[i]); 
-                }    
-        },error =>{
-            console.log("SELECT ERROR " , error);
-        })  
-    }
 
     private fetch2(){
         let self = this;
         self.viewCheck = 1;
         console.log("Go to ===> fetch 2");
-        this.database.all("SELECT * FROM db_EngToEng WHERE dict_no > 400 LIMit 10").then(rows =>{
+        this.database.all("SELECT dict_no , dict_search , dict_meaning FROM db_word WHERE dict_no > 400 LIMit 10").then(rows =>{
             //console.log(rows);
             this.word_list = rows;
            
@@ -189,7 +219,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("Check ==> " , "Select ===> " + search);
              var temp = "%"+search+"%";
             
-            this.database.all("SELECT * FROM dict WHERE engWorld LIKE (?) or thaiWorld LIKE (?)",[temp,temp] ).then(rows =>{
+            this.database.all("SELECT dict_no , dict_search , dict_meaning FROM db_word WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
                 if(rows ==""){
                     console.log("not word ===>  " + rows + "is " + search);
                     alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
@@ -230,7 +260,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         var temp_list : Array<any>;
         temp_list = self.word_list;
         
-        for(var row in temp_list){
+        /*for(var row in temp_list){
             let model_item : Item = new Item();
 
             model_item.id = temp_list[row][0];
@@ -242,6 +272,20 @@ export class ViewComponent implements OnInit , AfterViewInit {
             //console.log(temp_list[row][0] +" " + temp_list[row][1] +" " + temp_list[row][2] );
 
             self.word_list2.push(model_item);
+       
+        }*/
+
+         for(var row in temp_list){
+            let model_word : WordItem = new WordItem();
+
+            model_word.id = temp_list[row][0];
+            model_word.dict_search = temp_list[row][1];
+            model_word.dict_meaning = temp_list[row][2];
+         
+
+            //console.log(temp_list[row][0] +" " + temp_list[row][1] +" " + temp_list[row][2] );
+
+            self.word_list2.push(model_word);
        
         }
     }
@@ -258,7 +302,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("Check ==> " , "Select ===> " + search);
             var temp = search+"%";
             
-            self.database.all("SELECT * FROM dict WHERE engWorld LIKE (?) or thaiWorld LIKE (?)",[temp,temp] ).then(rows =>{
+            self.database.all("SELECT dict_no , dict_search , dict_meaning FROM dict WHERE dict_search LIKE ",[temp] ).then(rows =>{
                 if(rows ==""){
                     console.log("not word ===>  " + rows + "is " + search);
                     alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
