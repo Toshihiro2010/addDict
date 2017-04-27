@@ -374,15 +374,12 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let rows = args;
 
         for(var row in rows){
-            //console.log(rows[row]);
-            let model_item : Item = new Item();
-            model_item.id = rows[row][0];
-            model_item.wordEng = rows[row][1];
-            model_item.wordThai = rows[row][2];
-            model_item.wordType = rows[row][3];
-            model_item.wordFavorite = rows[row][4];
-            //console.log(rows[row][0] +" " + rows[row][1] +" " + rows[row][2] +"" );
-            self.word_list2.push(model_item);
+            let model_word : WordItem = new WordItem();
+            model_word.id = rows[row][0];
+            model_word.dict_search = rows[row][1];
+            model_word.dict_meaning = rows[row][2];
+
+            self.word_list2.push(model_word);
         }
 
     }
