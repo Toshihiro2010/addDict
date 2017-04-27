@@ -5,9 +5,9 @@
         <Button text="*" width="10%"  *ngIf="favorite == 1" class="btn-favorite-true" (tap)="myFavorite()"></Button>
         <Button text=">" width="10%" (tap)="sound_play()"></Button>
     </StackLayout>
-    <Label [text]="word.wordEng"></Label> 
-    <Label [text]="word.wordType"></Label>
-	<Label [text]="word.wordThai" ></Label> 
+    <Label [text]="word.dict_search"></Label> 
+    <Label [text]="word.dict_meaning"></Label>
+
 
     <Button text="fetch Join History" (tap)="fetchJoin()"></Button>
 </StackLayout>

@@ -3,6 +3,7 @@ import { PageRoute } from "nativescript-angular/router";
 import { Router } from "@angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { Item } from "../../models/items/item";
+import { WordItem } from "../../models/items/items_word";
 import { Observable } from 'data/observable';
 import * as fs from "file-system";  //เรียกใช้เพื่อเข้าถึง uri
 
@@ -18,7 +19,7 @@ var sound = require("nativescript-sound"); //เรียกใช้ plugin sou
 })
 export class ListDetailComponent extends Observable implements OnInit {
  
-    word:Item;      //word ที่ได้รับเข้ามาจาก lsit main
+    word:WordItem;      //word ที่ได้รับเข้ามาจาก lsit main
     favorite : any ;    // button output show on layout
 
     private url = "http://translate.google.com/translate_tts?ie=UTF-8&tl=en&client=tw-ob&q=";// link สำหรับ load ไฟล์จาก google traslate
@@ -35,23 +36,22 @@ export class ListDetailComponent extends Observable implements OnInit {
         self.word = JSON.parse(params["words"]); // ให้ตัวแปร self.word รับค่าจาก list main ด้วยรูป json โดยส่งมาในชื่อ words ด้วยคำสั่ง params["words"]
 
         console.log(self.word.id);
-        console.log(self.word.wordEng);
-        console.log(self.word.wordThai);
-        console.log(self.word.wordType);
-        console.log(self.word.wordFavorite);
+        console.log(self.word.dict_search);
+        console.log(self.word.dict_meaning);
+     
         
-        self.favorite = self.word.wordFavorite; // ให้ favorite
+        self.favorite = 0;; // ให้ favorite
         
-        let temp = self.word.wordType;
+        /*let temp = self.word.wordType;
         self.word.wordType = self.changWordType(temp);
-        console.log(self.word.wordType);
+        console.log(self.word.wordType);*/
 
-        self.url = self.url + self.word.wordEng;//set word สำหรับค้นหา googletraslate
+        self.url = self.url + self.word.dict_search;//set word สำหรับค้นหา googletraslate
         self.setButtonSound(self.url);
         
         //เรียกเปิดใช้ Database
         new Sqlite("dicts.db").then(db =>{
-            this.database = db;
+            self.database = db;
             console.log("Open database Success");
             
         },error =>{

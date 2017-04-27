@@ -36,6 +36,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
     
     word_list = [];     //list sql temp 
     word_sql = "";   //output on sql
+    private db_file_check = 0;
 
 
     private viewCheck = 0; // เช็คว่า เป็นส่วนไหน 0-random , 1-Search , 2-Facvortie , 3-History
@@ -60,14 +61,16 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
         self.myDb();
 
-        new Sqlite(self.my_db_path).then(db =>{
-            self.my_db = db;
-            self.btnSelectRandom();
-            console.log("Open database Success");
-            
-        },error =>{
-            console.log("Open DB ERROR" , error);
-        })
+        if(self.db_file_check != 0 ){
+            (new Sqlite(self.my_db_path)).then(db =>{
+                self.my_db = db;
+                console.log("Open database Success");
+                
+            },error =>{
+                console.log("Open DB ERROR" , error);
+            })
+        }
+
         
 
         
@@ -120,13 +123,13 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("Not DATABASE");
             console.log(self.db_word.length);
         }else if(self.db_word.length == 1){
-
+            self.db_file_check =1;
             console.log(self.db_word.length);
             self.my_db_path = self.db_word[0].path;
             console.log("my_db => " +  self.my_db_path);
-            
+            //self.btnSelectRandom();
         }else if(self.db_word.length > 1){
-
+            self.db_file_check =1;
             console.log(self.db_word.length);
             for(let i = 0 ; i < self.db_word.length ; i++){
                 if(self.db_word[i].name == "EngToTha.db"){
@@ -136,10 +139,10 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 if(i = self.db_word.length -1 ){
                     if(self.my_db_path == ""){
                         self.my_db_path = self.db_word[0].path;
-
                     }
                 }
             }
+            //self.btnSelectRandom();
             
         }
 
@@ -276,33 +279,37 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
 
         self.viewCheck = 1 ;
-
-        var search = self.word_search;
-        if (search == ""){
-            self.btnSelectRandom();
-            alert("มีช่องว่างนะไอ้โง่ .....");
-        }else{
-            console.log("Check ==> " , "Select ===> " + search);
-            var temp = search+"%";
-            
-            self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
-                if(rows ==""){
-                    console.log("not word ===>  " + rows + "is " + search);
-                    alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
-                }else{
-                    self.word_search = "";
-                }
+        if(self.db_file_check != 0 ){
+            var search = self.word_search;
+            if (search == ""){
+                //self.btnSelectRandom();
+                alert("มีช่องว่างนะไอ้โง่ .....");
+            }else{
+                console.log("Check ==> " , "Select ===> " + search);
+                var temp = search+"%";
                 
-                self.word_sql = rows;
-                self.refeshList();
-                self.pushList(rows);
-                //self.refeshList();
-                //self.pushList(rows);
+                self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
+                    if(rows ==""){
+                        console.log("not word ===>  " + rows + "is " + search);
+                        alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
+                    }else{
+                        self.word_search = "";
+                    }
+                    
+                    self.word_sql = rows;
+                    self.refeshList();
+                    self.pushList(rows);
+                    //self.refeshList();
+                    //self.pushList(rows);
 
-                },error =>{
-                    console.log("SELECT ERROR " , error);
-                })
+                    },error =>{
+                        console.log("SELECT ERROR " , error);
+                    })
             }
+        }else{
+            alert("NO Databse .....");
+        }
+        
 
     }
     // FAVORiTE AND HISTORY NO USE
@@ -339,23 +346,27 @@ export class ViewComponent implements OnInit , AfterViewInit {
     }
 
     btnSelectRandom(){
-
-        //console.log("Select Random");
-
         let self = this;
-        self.viewCheck = 0 ;
-        self.refeshList();
-        self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 ORDER BY RANDOM() LIMIT 1").then(rows =>{
-            console.log(rows);
+
+        if(self.db_file_check != 0 ){
+            self.viewCheck = 0 ;
+            self.refeshList();
+            self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 ORDER BY RANDOM() LIMIT 1").then(rows =>{
+                console.log(rows);
+                
+                console.log("eng_word ==> " , rows[0][1]); // result word
+                self.word_rand = rows[0][1];
+                console.log("thai_word ==> " , rows[0][2]); //result mean word
+                self.mean_rand = rows[0][2];
+
             
-            console.log("eng_word ==> " , rows[0][1]); // result word
-            self.word_rand = rows[0][1];
-            console.log("thai_word ==> " , rows[0][2]); //result mean word
-            self.mean_rand = rows[0][2];
-          
-        },error =>{
-            console.log("SELECT ERROR " , error);
-        })
+            },error =>{
+                console.log("SELECT ERROR " , error);
+            })
+        }else{
+            alert("กรุณาโหลด Dicttionnary ในหน้า setting");
+        }
+        
 
         
     }
