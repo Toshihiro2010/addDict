@@ -20,13 +20,12 @@
 <StackLayout orientation="vertical">
 
     <StackLayout orientation="horizontal">
-        <TextField [(ngModel)]="word_search" hint="Engworld" width="80%" class="input-text" ></TextField>
-        <Button text="+" (tap)="btnInsert()" width="9.5%" class="btn-main-insert"></Button>
-        <Button text="-" (tap)="btnDelete()" width="10%" class="btn-main-delete"></Button>
-    </StackLayout>
+        <TextField [(ngModel)]="word_search" hint="Engworld" width="75%" class="input-text" ></TextField>
+        <!--<Button text="+" (tap)="btnInsert()" width="9.5%" class="btn-main-insert"></Button>
+        <Button text="-" (tap)="btnDelete()" width="10%" class="btn-main-delete"></Button> -->
+        <Button text="Search" (tap)="getItemSelect()" width ="25%"></Button>
 
-    
-    <Button text="Search" (tap)="getItemSelect()" ></Button>
+    </StackLayout>
     
     <ListView [items]="word_list2"  (itemTap)="onItemTap($event)" *ngIf="viewCheck == 1">
 		    <template let-item="item" let-i="index">
