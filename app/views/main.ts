@@ -21,7 +21,8 @@ var fs = require("file-system");
 export class ViewComponent implements OnInit , AfterViewInit {
 
     private database : any;
-    private db_word = [] ;
+    private db_word = [] ;  //เก็บไฟล์ ในรูปของ object ในโฟลเดอร์ file/database 
+    private my_db;  //เก็บ path file Database
  
 
 
@@ -43,9 +44,6 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
     public constructor(private router: Router ){
         let self = this;
-        let documents = fs.knownFolders.documents();
-        let my_path = documents.getFolder("database");
-        var my_db = my_path.getFile("EngToEng.db");
 
         //Code ตอนที่ไม่มีอะไรเลย เริ่มสร้างจาก 1
         (new Sqlite("dicts.db")).then(db => {
@@ -61,7 +59,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
         self.myDb();
 
-        new Sqlite(my_db.path).then(db =>{
+        new Sqlite(self.my_db).then(db =>{
             self.db_word = db;
             console.log("Open database Success");
             
@@ -93,7 +91,6 @@ export class ViewComponent implements OnInit , AfterViewInit {
     myDb(){
         let self = this;
         console.log("in => self.mydb" );
-        
         let doc = fs.knownFolders.documents();
         let my_path = doc.getFolder("database");
         console.log(JSON.stringify(my_path));
@@ -103,7 +100,6 @@ export class ViewComponent implements OnInit , AfterViewInit {
         for(let i in temp){
             //console.log("i" , JSON.stringify(temp[i]));
             let model_db : MyDatabase = new MyDatabase();
-
             console.log("i" , temp[i].name);
             console.log("i" , temp[i].extension);
             if(temp[i].extension == ".db"){
@@ -120,10 +116,27 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
         if(self.db_word.length == 0){
             console.log("Not DATABASE");
-            console.log(self.db_word);
-        }else{
-            console.log("Acces Database");
-            console.log(JSON.stringify(self.db_word));
+            console.log(self.db_word.length);
+        }else if(self.db_word.length == 1){
+            console.log(self.db_word.length);
+            self.my_db = self.db_word[0].path;
+            console.log("my_db => " +  self.my_db);
+            
+        }else if(self.db_word.length > 1){
+            console.log(self.db_word.length);
+            for(let i = 0 ; i < self.db_word.length ; i++){
+                if(self.db_word[i].name == "EngToTha.db"){
+                    self.my_db = self.db_word[i].path;
+                }
+
+                if(i = self.db_word.length -1 ){
+                    if(self.my_db == ""){
+                        self.my_db = self.db_word[0].path;
+
+                    }
+                }
+            }
+            
         }
 
     }
@@ -167,22 +180,11 @@ export class ViewComponent implements OnInit , AfterViewInit {
     
 
 
-
-    public insert(){
-        let self = this;
-        self.database.execSQL("INSERT INTO dict (engWorld, thaiWorld) VALUES (?,?)", ["red" ,"แดง"]).then(all_word => {
-            console.log("INSERT RESULT => " , all_word  );
-        }, error => {
-            console.log("INSERT ERROR => " , error);
-        });
-    }
-
-
     private fetch2(){
         let self = this;
         self.viewCheck = 1;
         console.log("Go to ===> fetch 2");
-        this.database.all("SELECT dict_no , dict_search , dict_meaning FROM db_word WHERE dict_no > 400 LIMit 10").then(rows =>{
+        this.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 LIMit 10").then(rows =>{
             //console.log(rows);
             this.word_list = rows;
            
@@ -212,25 +214,22 @@ export class ViewComponent implements OnInit , AfterViewInit {
     }
 
     btnSelect(){
-        var search = this.word_search;
+        let self = this;
+        var search = self.word_search;
         if (search == ""){
             alert("มีช่องว่างนะไอ้โง่ .....");
         }else{
             console.log("Check ==> " , "Select ===> " + search);
              var temp = "%"+search+"%";
             
-            this.database.all("SELECT dict_no , dict_search , dict_meaning FROM db_word WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
+            self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
                 if(rows ==""){
                     console.log("not word ===>  " + rows + "is " + search);
                     alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
                 }
-                this.word_list = rows;
+                self.word_list = rows;
                 for(var row in rows){
                     console.log("Result ==v");
-                
-                        /*for(var i=0 ; i <= rows.length ; i++ ){
-                         console.log("result ==>" , rows[row][i]); 
-                        }*/
                     console.log("result all ==> " , rows[row]);//result all
                     console.log("eng_word ==> " , rows[row][1]); // result eng
                     console.log("thai_word ==> " , rows[row][2]); //result thai
@@ -239,14 +238,11 @@ export class ViewComponent implements OnInit , AfterViewInit {
                     console.log("SELECT ERROR " , error);
                 })
             }
-        
     }
-
 
     btnDelete(){
         console.log("Check == > " , " Delete");
-        this.router.navigate(["delete"]),{
-            
+        this.router.navigate(["delete"]),{ 
         }
         this.btnSelectRandom();
          
@@ -259,31 +255,13 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
         var temp_list : Array<any>;
         temp_list = self.word_list;
-        
-        /*for(var row in temp_list){
-            let model_item : Item = new Item();
-
-            model_item.id = temp_list[row][0];
-            model_item.wordEng = temp_list[row][1];
-            model_item.wordThai = temp_list[row][2];
-            model_item.wordType = temp_list[row][3];
-            model_item.wordFavorite = temp_list[row][4];
-
-            //console.log(temp_list[row][0] +" " + temp_list[row][1] +" " + temp_list[row][2] );
-
-            self.word_list2.push(model_item);
-       
-        }*/
-
+    
          for(var row in temp_list){
             let model_word : WordItem = new WordItem();
 
             model_word.id = temp_list[row][0];
             model_word.dict_search = temp_list[row][1];
             model_word.dict_meaning = temp_list[row][2];
-         
-
-            //console.log(temp_list[row][0] +" " + temp_list[row][1] +" " + temp_list[row][2] );
 
             self.word_list2.push(model_word);
        
@@ -302,7 +280,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("Check ==> " , "Select ===> " + search);
             var temp = search+"%";
             
-            self.database.all("SELECT dict_no , dict_search , dict_meaning FROM dict WHERE dict_search LIKE ",[temp] ).then(rows =>{
+            self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
                 if(rows ==""){
                     console.log("not word ===>  " + rows + "is " + search);
                     alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
@@ -328,7 +306,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         self.viewCheck = 1;
 
 
-        let strSQL = "SELECT * FROM dict WHERE favorite = 1";
+        let strSQL = "SELECT * FROM FAVORITE";
         self.database.all(strSQL).then(result => {
             self.word_sql = result;
             self.refeshList();
