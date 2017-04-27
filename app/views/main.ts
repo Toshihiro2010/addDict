@@ -23,11 +23,12 @@ export class ViewComponent implements OnInit , AfterViewInit {
     private database : any;
     private db_word = [] ;  //เก็บไฟล์ ในรูปของ object ในโฟลเดอร์ file/database 
     private my_db;  //เก็บ path file Database
+    private my_db_path;  //เก็บ path file Database
  
 
 
-    eng_rand ="";   //word eng Random show on layout
-    thai_rand = ""; //word thai Random show on layout
+    word_rand ="";   //word eng Random show on layout
+    mean_rand = ""; //word thai Random show on layout
     type_rand ="";  //word type Random show on layout
     word_list2 = [];    //list show on layout
 
@@ -52,15 +53,16 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 self.createHistory();
                 self.createMyUser();
                 self.createFavorite();
-                //this.btnSelectRandom();
+                
         },error =>{
             console.log("OPEN DB ERROR" , error);
         })
 
         self.myDb();
 
-        new Sqlite(self.my_db).then(db =>{
-            self.db_word = db;
+        new Sqlite(self.my_db_path).then(db =>{
+            self.my_db = db;
+            self.btnSelectRandom();
             console.log("Open database Success");
             
         },error =>{
@@ -84,7 +86,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         }
         application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
             console.log('AndroidApplication.activityBackPressedEvent');
-            this.fetch2();
+            //this.fetch2();
         });
     }
 
@@ -118,20 +120,22 @@ export class ViewComponent implements OnInit , AfterViewInit {
             console.log("Not DATABASE");
             console.log(self.db_word.length);
         }else if(self.db_word.length == 1){
+
             console.log(self.db_word.length);
-            self.my_db = self.db_word[0].path;
-            console.log("my_db => " +  self.my_db);
+            self.my_db_path = self.db_word[0].path;
+            console.log("my_db => " +  self.my_db_path);
             
         }else if(self.db_word.length > 1){
+
             console.log(self.db_word.length);
             for(let i = 0 ; i < self.db_word.length ; i++){
                 if(self.db_word[i].name == "EngToTha.db"){
-                    self.my_db = self.db_word[i].path;
+                    self.my_db_path = self.db_word[i].path;
                 }
 
                 if(i = self.db_word.length -1 ){
-                    if(self.my_db == ""){
-                        self.my_db = self.db_word[0].path;
+                    if(self.my_db_path == ""){
+                        self.my_db_path = self.db_word[0].path;
 
                     }
                 }
@@ -232,7 +236,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
                     console.log("Result ==v");
                     console.log("result all ==> " , rows[row]);//result all
                     console.log("eng_word ==> " , rows[row][1]); // result eng
-                    console.log("thai_word ==> " , rows[row][2]); //result thai
+                    console.log("thai_word ==> " , rows[row][2]); 
                     }
                 },error =>{
                     console.log("SELECT ERROR " , error);
@@ -275,6 +279,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
         var search = self.word_search;
         if (search == ""){
+            self.btnSelectRandom();
             alert("มีช่องว่างนะไอ้โง่ .....");
         }else{
             console.log("Check ==> " , "Select ===> " + search);
@@ -343,14 +348,11 @@ export class ViewComponent implements OnInit , AfterViewInit {
         self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 ORDER BY RANDOM() LIMIT 1").then(rows =>{
             console.log(rows);
             
-            console.log("eng_word ==> " , rows[0][1]); // result eng
-            self.eng_rand = rows[0][1];
-            console.log("thai_word ==> " , rows[0][2]); //result thai
-            self.thai_rand = rows[0][2];
-            console.log("type word ==> " , rows[0][3]); //result type
-            self.type_rand = rows[0][3];
-        
-
+            console.log("eng_word ==> " , rows[0][1]); // result word
+            self.word_rand = rows[0][1];
+            console.log("thai_word ==> " , rows[0][2]); //result mean word
+            self.mean_rand = rows[0][2];
+          
         },error =>{
             console.log("SELECT ERROR " , error);
         })

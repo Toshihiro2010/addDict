@@ -1,22 +1,9 @@
 <StackLayout orientation="vertical" *ngIf="status == 0" >
     <StackLayout orientation="horizontal">
-        <Label text="Setting" align="center" text-size="36"> </Label>
+        
     </StackLayout>
     <Button text="Sign IN Pleassse" (tap)="signIn()"></Button>
-</StackLayout>
 
-<StackLayout orientation="vertical" *ngIf="status == 1" >
-    <TextField hint="ID:" [(ngModel)]="username" ></TextField>
-    <TextField hint="PASSWORD:" [(ngModel)]="password" ></TextField>
-
-    <Button text="LOGIN" (tap)="btnLogin()"></Button>
-    <Button text="Check" (tap)="btnCheck()"></Button>
-</StackLayout>
-
-
-
-<StackLayout orientation = "vertical">
-    
     <StackLayout orientatiob = "horizontal">
         <Label text="EngToThai"></Label>
         <Button text="Download" (tap)="btnEngToThai()"></Button>
@@ -27,4 +14,13 @@
         <Button text="Download" (tap)="btnEngToEng()"></Button>
     </StackLayout>
 
+
+</StackLayout>
+
+<StackLayout orientation="vertical" *ngIf="status == 1" >
+    <TextField hint="ID:" [(ngModel)]="username" ></TextField>
+    <TextField hint="PASSWORD:" [(ngModel)]="password" ></TextField>
+
+    <Button text="LOGIN" (tap)="btnLogin()"></Button>
+    <Button text="Check" (tap)="btnCheck()"></Button>
 </StackLayout>

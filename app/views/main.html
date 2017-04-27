@@ -32,8 +32,8 @@
 		    <template let-item="item" let-i="index">
 	            <StackLayout orientation="horizontal"> 
                     
-	            	<Label text="{{item.wordThai}} " class="bold" ></Label>
-                    <Label [text]="item.wordEng" ></Label>
+	            	<Label text="{{item.dict_search}} " class="bold" ></Label>
+                    <Label [text]="item.dict_meaning" ></Label>
 				</StackLayout>
 	        </template>
 	</ListView>
@@ -41,9 +41,9 @@
 
 
     <StackLayout orientation="vertical" *ngIf="viewCheck == 0">
-        <Label [text]="eng_rand" ></Label>
-        <Label [text]="type_rand"></Label>
-        <Label [text]="thai_rand"></Label>
+        <Label [text]="word_rand" ></Label>
+        <Label [text]="mean_rand"></Label>
+       
     </StackLayout>
 
     <!--<Button text="fetch" (tap)="fetch2()" ></Button> -->
