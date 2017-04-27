@@ -16,6 +16,7 @@
     "rxjs": true,
     "symbol-observable": true,
     "url": true,
+    "nativescript-downloadmanager": true,
     "nativescript-sound": true,
     "nativescript-sqlite": true,
     "nativescript-theme-core": true,

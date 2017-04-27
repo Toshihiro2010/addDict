@@ -1,0 +1,102 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "nativescript-downloadmanager",
+        "scope": null,
+        "escapedName": "nativescript-downloadmanager",
+        "name": "nativescript-downloadmanager",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "E:\\test\\test6"
+    ]
+  ],
+  "_from": "nativescript-downloadmanager@latest",
+  "_id": "nativescript-downloadmanager@0.1.0",
+  "_inCache": true,
+  "_location": "/nativescript-downloadmanager",
+  "_nodeVersion": "7.1.0",
+  "_npmOperationalInternal": {
+    "host": "packages-18-east.internal.npmjs.com",
+    "tmp": "tmp/nativescript-downloadmanager-0.1.0.tgz_1482204985543_0.6123786622192711"
+  },
+  "_npmUser": {
+    "name": "polcpp",
+    "email": "polcmara@gmail.com"
+  },
+  "_npmVersion": "3.10.9",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "nativescript-downloadmanager",
+    "scope": null,
+    "escapedName": "nativescript-downloadmanager",
+    "name": "nativescript-downloadmanager",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/nativescript-downloadmanager/-/nativescript-downloadmanager-0.1.0.tgz",
+  "_shasum": "75fdde59feb4c4e2322815d8e1b66084b9103faa",
+  "_shrinkwrap": null,
+  "_spec": "nativescript-downloadmanager",
+  "_where": "E:\\test\\test6",
+  "author": {
+    "name": "Pol Cámara",
+    "email": "polcmara@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/PolCPP/nativescript-downloadmanager/issues"
+  },
+  "dependencies": {},
+  "description": "A small library to interact with android DownloadManager.",
+  "devDependencies": {
+    "tns-core-modules": "^2.3.0",
+    "tns-platform-declarations": "^2.3.0",
+    "typescript": "^2.0.7"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "75fdde59feb4c4e2322815d8e1b66084b9103faa",
+    "tarball": "https://registry.npmjs.org/nativescript-downloadmanager/-/nativescript-downloadmanager-0.1.0.tgz"
+  },
+  "gitHead": "e1ea55e9a8c086b3384c2eadbf20eac7e7dc097d",
+  "homepage": "https://github.com/PolCPP/nativescript-downloadmanager",
+  "keywords": [
+    "NativeScript",
+    "JavaScript",
+    "Android",
+    "Download",
+    "Http"
+  ],
+  "license": "MIT",
+  "main": "downloadmanager",
+  "maintainers": [
+    {
+      "name": "polcpp",
+      "email": "polcmara@gmail.com"
+    }
+  ],
+  "name": "nativescript-downloadmanager",
+  "nativescript": {
+    "platforms": {
+      "android": "2.3.0"
+    }
+  },
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PolCPP/nativescript-downloadmanager.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "typings": "index.d.ts",
+  "version": "0.1.0"
+}

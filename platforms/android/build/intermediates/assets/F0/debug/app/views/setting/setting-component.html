@@ -1,0 +1,26 @@
+<StackLayout orientation="vertical" *ngIf="status == 0" >
+    <StackLayout orientation="horizontal">
+        
+    </StackLayout>
+    <Button text="Sign IN Pleassse" (tap)="signIn()"></Button>
+
+    <StackLayout orientatiob = "horizontal">
+        <Label text="EngToThai"></Label>
+        <Button text="Download" (tap)="btnEngToThai()"></Button>
+    </StackLayout>
+
+    <StackLayout orientatiob = "horizontal">
+        <Label text="EngToEng"></Label>
+        <Button text="Download" (tap)="btnEngToEng()"></Button>
+    </StackLayout>
+
+
+</StackLayout>
+
+<StackLayout orientation="vertical" *ngIf="status == 1" >
+    <TextField hint="ID:" [(ngModel)]="username" ></TextField>
+    <TextField hint="PASSWORD:" [(ngModel)]="password" ></TextField>
+
+    <Button text="LOGIN" (tap)="btnLogin()"></Button>
+    <Button text="Check" (tap)="btnCheck()"></Button>
+</StackLayout>

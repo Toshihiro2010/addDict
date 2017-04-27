@@ -1,5 +1,13 @@
-import { Component } from "@angular/core";
-import { Route } from "@angular/router";
+import { Component , NgModule , OnDestroy } from "@angular/core";
+import { Route , Router, NavigationStart, NavigationEnd } from '@angular/router';
+import { platformNativeScriptDynamic } from "nativescript-angular/platform";
+import { RouterExtensions } from "nativescript-angular/router";
+
+import { NativeScriptRouterModule } from "nativescript-angular/router";
+
+
+
+
 
 
 var Sqlite = require("nativescript-sqlite");
@@ -10,7 +18,7 @@ var Toast = require("nativescript-toast");
     selector: "Inserts",
     templateUrl: "views/inserts/insert-component.html",
 })
-export class Inserts {
+export class Inserts implements OnDestroy  {
     
     
     private database :any;
@@ -18,7 +26,7 @@ export class Inserts {
     thai_word="";
 
 
-    constructor(){
+    constructor(private routerExtensions: RouterExtensions){
         new Sqlite("dicts.db").then(db =>{
             this.database = db;
             console.log("Open database Success");
@@ -29,13 +37,18 @@ export class Inserts {
 
     }
 
+    ngOnDestroy(){
+        console.log("Ng-insert ===> Ondestroy");
+        
+    }
+
 
 
     btnInsert(){
         console.log("Check click ==>");
         console.log("eng_word ======> " + this.eng_word);
         console.log("thai_word ======> " + this.thai_word);
-        //TODO insert Thai_word , eng_word
+        //TODO insert Thai_word , eng_wor
 
         if(this.eng_word =="" || this.thai_word =="" ){
             var toast = Toast.makeText("มีช่องว่างนะไอ้โง่");
@@ -55,6 +68,11 @@ export class Inserts {
             this.thai_word="";   
         }   
     }
+
+    public goBack() {
+        this.routerExtensions.back();
+    }   
+
 
   
 

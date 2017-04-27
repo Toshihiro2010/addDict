@@ -24,6 +24,8 @@ export class ViewComponent implements OnInit , AfterViewInit {
     private db_word = [] ;  //เก็บไฟล์ ในรูปของ object ในโฟลเดอร์ file/database 
     private my_db;  //เก็บ path file Database
     private my_db_path;  //เก็บ path file Database
+    private file_length ; //เก็บเพื่อทราบ row file
+    private temp_sql = ""; //เก็บ คำสั่ง sql เพื่อใช้ refesh ใหม่
  
 
 
@@ -39,7 +41,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
     private db_file_check = 0;
 
 
-    private viewCheck = 0; // เช็คว่า เป็นส่วนไหน 0-random , 1-Search , 2-Facvortie , 3-History
+    private viewCheck = 0; // เช็คว่า เป็นส่วนไหน 0-random , 1-listview 
 
     
     
@@ -65,7 +67,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
             (new Sqlite(self.my_db_path)).then(db =>{
                 self.my_db = db;
                 console.log("Open database Success");
-                
+                self.btnSelectRandom();
             },error =>{
                 console.log("Open DB ERROR" , error);
             })
@@ -89,8 +91,80 @@ export class ViewComponent implements OnInit , AfterViewInit {
         }
         application.android.on(AndroidApplication.activityBackPressedEvent, (data: AndroidActivityBackPressedEventData) => {
             console.log('AndroidApplication.activityBackPressedEvent');
-            //this.fetch2();
+            self.btnSelectRandom();
+            self.check_DB_FILE();
         });
+    }
+
+    private check_DB_FILE(){
+        console.log("***************");
+        let self = this;
+        self.check_file();
+
+        if(self.file_length != self.db_word.length){
+            self.file_length = self.db_word.length;
+
+            if(self.file_length== 0){
+                console.log("Not DATABASE");
+            
+            }else if(self.file_length == 1){
+                self.db_file_check =1;
+
+                self.my_db_path = self.db_word[0].path;
+                console.log("my_db => " +  self.my_db_path);
+                //self.btnSelectRandom();
+
+            }else if(self.file_length > 1){
+                self.db_file_check = 1;
+                //console.log(self.file_length);
+                for(let i = 0 ; i < self.file_length; i++){
+                    if(self.db_word[i].name == "EngToTha.db"){
+                        self.my_db_path = self.db_word[i].path;
+                    }
+
+                    if(i = self.file_length -1 ){
+                        if(self.my_db_path == ""){
+                            self.my_db_path = self.db_word[0].path;
+                        }
+                    }
+                }
+            }
+            self.useDB_Open_File();
+        }
+    }
+
+    private check_file(){
+        let self = this;
+        console.log("in => check_file" );
+        let doc = fs.knownFolders.documents();
+        let my_path = doc.getFolder("database");
+        //console.log(JSON.stringify(my_path));
+
+        let temp = my_path.getEntitiesSync();
+        //console.log("temp => " , JSON.stringify(temp));
+        for(let i in temp){
+            let model_db : MyDatabase = new MyDatabase();
+
+            if(temp[i].extension == ".db"){
+                model_db.name = temp[i].name;
+                model_db.path = temp[i].path;
+                self.db_word.push(model_db);
+            }  
+        }
+    }
+
+    private useDB_Open_File(){
+        console.log("***************");
+        let self = this;
+        if(self.db_file_check != 0 ){
+            (new Sqlite(self.my_db_path)).then(db =>{
+                self.my_db = db;
+                console.log("Open database Success");
+                
+            },error =>{
+                console.log("Open DB ERROR" , error);
+            })
+        }
     }
 
     myDb(){
@@ -98,52 +172,49 @@ export class ViewComponent implements OnInit , AfterViewInit {
         console.log("in => self.mydb" );
         let doc = fs.knownFolders.documents();
         let my_path = doc.getFolder("database");
-        console.log(JSON.stringify(my_path));
+        //console.log(JSON.stringify(my_path));
 
         let temp = my_path.getEntitiesSync();
-        console.log("temp => " , JSON.stringify(temp));
+        //console.log("temp => " , JSON.stringify(temp));
         for(let i in temp){
             //console.log("i" , JSON.stringify(temp[i]));
             let model_db : MyDatabase = new MyDatabase();
-            console.log("i" , temp[i].name);
-            console.log("i" , temp[i].extension);
             if(temp[i].extension == ".db"){
                 //let temp2 = [temp[i].name , temp[i].path];
-
                 model_db.name = temp[i].name;
                 model_db.path = temp[i].path;
-
                 //let temp2 = [1][1];;
                 self.db_word.push(model_db);
-                
             }  
         }
+        if(self.file_length != self.db_word.length){
+            self.file_length = self.db_word.length;
+        }
 
-        if(self.db_word.length == 0){
+        if(self.file_length== 0){
             console.log("Not DATABASE");
-            console.log(self.db_word.length);
-        }else if(self.db_word.length == 1){
+          
+        }else if(self.file_length == 1){
             self.db_file_check =1;
-            console.log(self.db_word.length);
+
             self.my_db_path = self.db_word[0].path;
             console.log("my_db => " +  self.my_db_path);
             //self.btnSelectRandom();
-        }else if(self.db_word.length > 1){
-            self.db_file_check =1;
-            console.log(self.db_word.length);
-            for(let i = 0 ; i < self.db_word.length ; i++){
+
+        }else if(self.file_length > 1){
+            self.db_file_check = 1;
+            //console.log(self.file_length);
+            for(let i = 0 ; i < self.file_length; i++){
                 if(self.db_word[i].name == "EngToTha.db"){
                     self.my_db_path = self.db_word[i].path;
                 }
 
-                if(i = self.db_word.length -1 ){
+                if(i = self.file_length -1 ){
                     if(self.my_db_path == ""){
                         self.my_db_path = self.db_word[0].path;
                     }
                 }
             }
-            //self.btnSelectRandom();
-            
         }
 
     }
@@ -157,7 +228,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
     private createHistory(){
         let self = this;
-        self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,sTime DATE)").then(id =>{
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,dict_search TEXT , dict_meaning TEXT)").then(id =>{
             self.database = self.database;
             console.log("CREATE HISTORY Success");
         },error =>{
@@ -190,20 +261,22 @@ export class ViewComponent implements OnInit , AfterViewInit {
     private fetch2(){
         let self = this;
         self.viewCheck = 1;
-        console.log("Go to ===> fetch 2");
-        this.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 LIMit 10").then(rows =>{
-            //console.log(rows);
-            this.word_list = rows;
-           
-            for(var i=0 ; i < rows.length ; i++ ){
-                    
-                }
-            self.refeshList();
-            self.pushList(rows);
+     
+        if(self.db_file_check != 0 ){
+            self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 LIMit 10").then(rows =>{
+                //console.log(rows);
+                self.word_list = rows;
+                self.refeshList();
+                self.pushList(rows);
+                
+            },error =>{
+                console.log("SELECT ERROR " , error);
+            })
+        }else{
+            console.log("No DATABASE");
             
-        },error =>{
-            console.log("SELECT ERROR " , error);
-        })
+        }
+        
     }
 
 
@@ -216,7 +289,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
                 curve: "linear"
             }
         }
-        this.btnSelectRandom();
+        
         
     }
 
@@ -227,13 +300,15 @@ export class ViewComponent implements OnInit , AfterViewInit {
             alert("มีช่องว่างนะไอ้โง่ .....");
         }else{
             console.log("Check ==> " , "Select ===> " + search);
-             var temp = "%"+search+"%";
+            var temp = "%"+search+"%";
+            let strSQL = "SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_search LIKE " + temp;
             
-            self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
+            self.my_db.all(strSQL).then(rows =>{
                 if(rows ==""){
                     console.log("not word ===>  " + rows + "is " + search);
                     alert("ไม่มีคำว่า " + search + " ในฐานข้อมูล");
                 }
+                self.temp_sql = strSQL;
                 self.word_list = rows;
                 for(var row in rows){
                     console.log("Result ==v");
@@ -251,8 +326,6 @@ export class ViewComponent implements OnInit , AfterViewInit {
         console.log("Check == > " , " Delete");
         this.router.navigate(["delete"]),{ 
         }
-        this.btnSelectRandom();
-         
     }
 
 
@@ -282,12 +355,12 @@ export class ViewComponent implements OnInit , AfterViewInit {
         if(self.db_file_check != 0 ){
             var search = self.word_search;
             if (search == ""){
-                //self.btnSelectRandom();
+                
                 alert("มีช่องว่างนะไอ้โง่ .....");
             }else{
                 console.log("Check ==> " , "Select ===> " + search);
-                var temp = search+"%";
-                
+                var temp = search+'%';
+              
                 self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_search LIKE (?)",[temp] ).then(rows =>{
                     if(rows ==""){
                         console.log("not word ===>  " + rows + "is " + search);
@@ -299,9 +372,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
                     self.word_sql = rows;
                     self.refeshList();
                     self.pushList(rows);
-                    //self.refeshList();
-                    //self.pushList(rows);
-
+                   
                     },error =>{
                         console.log("SELECT ERROR " , error);
                     })
@@ -334,7 +405,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
         self.viewCheck = 1;
         
-        let strSQL = "SELECT h.word_id , d.engWorld , d.thaiWorld , d.type , d.favorite FROM HISTORY h join dict d on h.word_id = d.id ORDER BY h.id DESC";
+        let strSQL = "SELECT dict_no , dict_search , dict_meaning FROM HISTORY ORDER BY id DESC";
         self.database.all(strSQL).then(result => {
             self.word_sql = result;
              self.refeshList();
@@ -416,6 +487,14 @@ export class ViewComponent implements OnInit , AfterViewInit {
             
         }
     
+    }
+
+    myOnResume(){
+        let self = this;
+        if (self.viewCheck == 1 ) {
+            self.refeshList();
+        }
+        
     }
     
  }

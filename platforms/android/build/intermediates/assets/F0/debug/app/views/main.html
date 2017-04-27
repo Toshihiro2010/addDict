@@ -1,21 +1,53 @@
+
+<ActionBar title="@Dict" class="action-label">
+    
+     <!--<ActionItem ios.systemIcon="2" android.systemIcon="ic_menu_edit" ios.position="right" android.position="right"></ActionItem>-->
+     <!--<ActionItem ios.systemIcon="3" android.systemIcon="ic_menu_save" ios.position="left" android.position="right"></ActionItem>-->
+     <!--<ActionItem ios.systemIcon="1" android.systemIcon="ic_menu_close_clear_cancel" ios.position="left" android.position="left" ></ActionItem>-->
+    
+    <ActionItem (tap)="getItemFavorite()" ios.systemIcon="16" ios.position="right" text="♥ Favorite" android.position="popup"></ActionItem>
+    <ActionItem (tap)="getItemHistory()" ios.systemIcon="15" ios.position="right" text="♥ History" android.position="popup"></ActionItem>
+    <ActionItem (tap)="onSetting()" ios.systemIcon="14" ios.position="right" text="♥ Setting" android.position="popup"></ActionItem>
+
+    <!--<StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left">-->
+        <!--<Label text="@Dict"  class="action-label" orientation="center"></Label>-->
+    <!--</StackLayout>-->
+    
+</ActionBar>
+
+
+
 <StackLayout orientation="vertical">
-    <ActionBar title="Test Main Sqlite2" > </ActionBar>
+
     <StackLayout orientation="horizontal">
         <TextField [(ngModel)]="word_search" hint="Engworld" width="80%" class="input-text" ></TextField>
         <Button text="+" (tap)="btnInsert()" width="9.5%" class="btn-main-insert"></Button>
         <Button text="-" (tap)="btnDelete()" width="10%" class="btn-main-delete"></Button>
     </StackLayout>
-    <Button text="Search" (tap)="btnSelect()" ></Button>
-    <Label [text]="word_search"></Label>
-    <Button text="fetch" (tap)="fetch()" ></Button>
-    <Button text="random" (tap)="btnSelectRandom()" ></Button>
 
-    <ListView [items]="items" class="list-group">
-        <template let-item="item">
-            <Label [nsRouterLink]="['/item', item.id]" [text]="item.name"
-                class="list-group-item"></Label>
-        </template>
-    </ListView>
+    
+    <Button text="Search" (tap)="getItemSelect()" ></Button>
+    
+    <ListView [items]="word_list2"  (itemTap)="onItemTap($event)" *ngIf="viewCheck == 1">
+		    <template let-item="item" let-i="index">
+	            <StackLayout orientation="horizontal"> 
+                    
+	            	<Label text="{{item.dict_search}} " class="bold" ></Label>
+                    <Label [text]="item.dict_meaning" ></Label>
+				</StackLayout>
+	        </template>
+	</ListView>
+    
+
+
+    <StackLayout orientation="vertical" *ngIf="viewCheck == 0">
+        <Label [text]="word_rand" ></Label>
+        <Label [text]="mean_rand"></Label>
+       
+    </StackLayout>
+
+    <!--<Button text="fetch" (tap)="fetch2()" ></Button> -->
+    <Button text="random" (tap)="btnSelectRandom()" ></Button>
 
     
 </StackLayout>

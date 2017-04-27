@@ -2,8 +2,13 @@ E:\test\test6\platforms\android\src\main\assets\app\app.component.js
 E:\test\test6\platforms\android\src\main\assets\app\app.module.js
 E:\test\test6\platforms\android\src\main\assets\app\app.routing.js
 E:\test\test6\platforms\android\src\main\assets\app\main.js
+E:\test\test6\platforms\android\src\main\assets\app\models\items\item.js
+E:\test\test6\platforms\android\src\main\assets\app\models\items\items_word.js
+E:\test\test6\platforms\android\src\main\assets\app\models\myDb\myDB.js
+E:\test\test6\platforms\android\src\main\assets\app\models\users\users.js
 E:\test\test6\platforms\android\src\main\assets\app\myFuction\myFunction1.js
 E:\test\test6\platforms\android\src\main\assets\app\shared\myFunction1.js
+E:\test\test6\platforms\android\src\main\assets\app\shared\user.service.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-angular\animation-driver.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-angular\animation-player.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-angular\collection-facade.js
@@ -58,6 +63,7 @@ E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-ang
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-angular\value-accessors\text-value-accessor.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-angular\value-accessors\time-value-accessor.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-angular\zone-js\dist\zone-nativescript.js
+E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-downloadmanager\downloadmanager.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-intl\index.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-intl\nativescript-intl-common.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\nativescript-intl\nativescript-intl.js
@@ -224,9 +230,14 @@ E:\test\test6\platforms\android\src\main\assets\app\tns_modules\tns-core-modules
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\tns-core-modules\utils\utils.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\tns-core-modules\xhr\xhr.js
 E:\test\test6\platforms\android\src\main\assets\app\tns_modules\tns-core-modules\xml\xml.js
-E:\test\test6\platforms\android\src\main\assets\app\views\item.js
 E:\test\test6\platforms\android\src\main\assets\app\views\main.js
 E:\test\test6\platforms\android\src\main\assets\app\views\deletes\delete-component.js
+E:\test\test6\platforms\android\src\main\assets\app\views\favorite\favorite-component.js
+E:\test\test6\platforms\android\src\main\assets\app\views\history\history-component.js
 E:\test\test6\platforms\android\src\main\assets\app\views\inserts\insert-component.js
+E:\test\test6\platforms\android\src\main\assets\app\views\list\main.js
+E:\test\test6\platforms\android\src\main\assets\app\views\list-detail\detail.js
+E:\test\test6\platforms\android\src\main\assets\app\views\setting\setting-component.js
 E:\test\test6\platforms\android\src\main\assets\app\views\setting\login\login-component.js
 E:\test\test6\platforms\android\src\main\assets\app\views\test\main-test.js
+E:\test\test6\platforms\android\src\main\assets\app\views\views-item\view-item.js

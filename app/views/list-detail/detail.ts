@@ -49,7 +49,7 @@ export class ListDetailComponent extends Observable implements OnInit {
         self.url = self.url + self.word.dict_search;//set word สำหรับค้นหา googletraslate
         self.setButtonSound(self.url);
         
-        //เรียกเปิดใช้ Database
+        //เรียกเปิดใช้ Databasee
         new Sqlite("dicts.db").then(db =>{
             self.database = db;
             console.log("Open database Success");

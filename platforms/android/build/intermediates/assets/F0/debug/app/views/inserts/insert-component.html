@@ -1,12 +1,10 @@
-<page-router-outlet>
-    <ActionBar title="Test Insert" > </ActionBar>
+<ActionBar title="Test Insert" >
+    <NavigationButton text="Go Back" android.systemIcon="ic_menu_back" (tap)="goBack()" > </NavigationButton>
+</ActionBar>
+<StackLayout orientation="vertical">
+    <TextField hint="English Word"  [(ngModel)]="eng_word" class="insert-text"></TextField>
+    <TextField hint="Thai Word" [(ngModel)]="thai_word" class="insert-text"></TextField>
     
-    <StackLayout orientation="vertical">
-        <TextField hint="English Word"  [(ngModel)]="eng_word" class="insert-text"></TextField>
-        <TextField hint="Thai Word" [(ngModel)]="thai_word" class="insert-text"></TextField>
+    <Button text="add data" (tap)="btnInsert()" class="btn-insert"></Button>
     
-        <Button text="add data" (tap)="btnInsert()" class="btn-insert"></Button>
-    
-
-    </StackLayout>
-</page-router-outlet>
+</StackLayout>

@@ -1,0 +1,13 @@
+<StackLayout orientation="vertical" >
+    <StackLayout orientation="horizontal">
+        <Label text="" width="80%"></Label>
+        <Button text="*" width="10%"  *ngIf="favorite == 0" class="btn-favorite-false" (tap)="myFavorite()"></Button>
+        <Button text="*" width="10%"  *ngIf="favorite == 1" class="btn-favorite-true" (tap)="myFavorite()"></Button>
+        <Button text=">" width="10%" (tap)="sound_play()"></Button>
+    </StackLayout>
+    <Label [text]="word.dict_search"></Label> 
+    <Label [text]="word.dict_meaning"></Label>
+
+
+    <Button text="fetch Join History" (tap)="fetchJoin()"></Button>
+</StackLayout>

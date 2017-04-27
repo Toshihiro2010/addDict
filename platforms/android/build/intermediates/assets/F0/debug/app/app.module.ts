@@ -12,6 +12,14 @@ import { Inserts } from "./views/inserts/insert-component";
 import { DeleteComponent } from "./views/deletes/delete-component";
 import { ViewComponentTest } from "./views/test/main-test"
 import { LoginComponent } from "./views/setting/login/login-component";
+import { ListComponent } from "./views/list/main";
+import { ViewItem } from "./views/views-item/view-item";
+import { ListDetailComponent } from "./views/list-detail/detail";
+import { HistoryComponent } from "./views/history/history-component";
+import { FavoriteComponent } from "./views/favorite/favorite-component";
+import { SettingComponent } from "./views/setting/setting-component";
+
+import { UserService } from "./shared/user.service";
 
 
 //import { AppComponent } from "./app.component";
@@ -35,11 +43,17 @@ import { LoginComponent } from "./views/setting/login/login-component";
         Inserts,
         DeleteComponent,
         ViewComponentTest,
-        LoginComponent
+        LoginComponent,
+        ListComponent,
+        ViewItem,
+        ListDetailComponent,
+        HistoryComponent,
+        FavoriteComponent,
+        SettingComponent
         
     ],
     providers: [
-   
+        UserService,
     ],
     schemas: [
         NO_ERRORS_SCHEMA
