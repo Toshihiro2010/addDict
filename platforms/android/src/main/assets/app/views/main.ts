@@ -228,7 +228,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
     private createHistory(){
         let self = this;
-        self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER ,dict_search TEXT , dict_meaning TEXT)").then(id =>{
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS HISTORY (id INTEGER PRIMARY KEY AUTOINCREMENT,dict_no INTEGER ,dict_search TEXT , dict_meaning TEXT)").then(id =>{
             self.database = self.database;
             console.log("CREATE HISTORY Success");
         },error =>{
@@ -238,7 +238,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
 
     private createFavorite(){   
         let self = this;
-        self.database.execSQL("CREATE TABLE IF NOT EXISTS FAVORITE (id INTEGER PRIMARY KEY AUTOINCREMENT,word_id INTEGER )").then(id =>{
+        self.database.execSQL("CREATE TABLE IF NOT EXISTS FAVORITE (id INTEGER PRIMARY KEY AUTOINCREMENT,dict_no INTEGER )").then(id =>{
             self.database = self.database;
             console.log("CREATE FAVORITE Success");
         },error =>{

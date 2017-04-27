@@ -73,7 +73,7 @@ export class SettingComponent {
  
             
             dm.unregisterBroadcast();
-            alert("กรุณาปิด application แล้วเปิดใหม่");
+            //alert("กรุณาปิด application แล้วเปิดใหม่");
         });
         
     }
@@ -111,7 +111,7 @@ export class SettingComponent {
  
             
             dm.unregisterBroadcast();
-            alert("กรุณาปิด application แล้วเปิดใหม่");
+            //alert("กรุณาปิด application แล้วเปิดใหม่");
         });
         
     }

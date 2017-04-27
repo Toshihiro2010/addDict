@@ -70,6 +70,10 @@ export class ListDetailComponent extends Observable implements OnInit {
     myFavorite(){
         console.log("click Favorite");
         let self = this;
+        let word_id = self.word.id;
+
+        self.myCheckFavorite(word_id);
+        /*
         if(self.favorite == 0 ){
             self.favorite = 1;
             self.database.execSQL("UPDATE dict SET favorite = (?) WHERE id = (?) " ,[self.favorite , self.word.id] , function(err , db ){
@@ -91,9 +95,46 @@ export class ListDetailComponent extends Observable implements OnInit {
                 
                 }
             });
-        }
+        }*/
+
+        
         
     }
+    private myCheckFavorite(word_id){
+        let self = this;
+        self.database.all("SELECT * FROM FAVORITE WHERE dict_no = (?)",[word_id]).then(rows =>{
+            if(rows ==""){
+                self.myInsertFavorite(word_id);
+            }else{
+                self.myDeleteFavoite(word_id);
+            }
+        },error =>{
+            console.log("SELECT ERROR " , error);
+        })
+    }
+
+    private myInsertFavorite(word_id){
+        let self = this;
+        self.database.execSQL("INSERT INTO FAVORITE (dict_no) VALUES (?)", [word_id]).then(word_insert => {
+                console.log("INSERT RESULT => " , word_insert  );
+                }, error => {
+                    console.log("INSERT ERROR => " , error);
+                }
+        );
+
+    }
+
+    private myDeleteFavoite(word_id){
+        let self = this;
+        self.database.execSQL("DELETE FROM FAVORITE WHERE dict_no = (?)", [word_id]).then(word_delete => {
+            console.log("DELETE RESULT => " , word_delete  );
+            self.myInsertFavorite(word_id);
+            }, error => {
+                console.log("DELETE ERROR => " , error);
+            }
+        );
+    }
+
 
     private myHistory(){
         let self = this;
@@ -107,7 +148,7 @@ export class ListDetailComponent extends Observable implements OnInit {
     private myCheckHistory(word_id){
         let self = this;
 
-        self.database.all("SELECT * FROM HISTORY WHERE word_id = (?)",[word_id]).then(rows =>{
+        self.database.all("SELECT * FROM HISTORY WHERE dict_no = (?)",[word_id]).then(rows =>{
             if(rows ==""){
                 self.myInsertHistory(word_id);
             }else{
@@ -116,30 +157,23 @@ export class ListDetailComponent extends Observable implements OnInit {
         },error =>{
             console.log("SELECT ERROR " , error);
         })
-
-
-        
-
     }
 
     private myDeleteHistory(word_id){
         let self = this;
 
-        self.database.execSQL("DELETE FROM HISTORY WHERE word_id = (?)", [word_id]).then(word_delete => {
+        self.database.execSQL("DELETE FROM HISTORY WHERE dict_no = (?)", [word_id]).then(word_delete => {
             console.log("DELETE RESULT => " , word_delete  );
             self.myInsertHistory(word_id);
             }, error => {
                 console.log("DELETE ERROR => " , error);
             }
         );
-
-
-
     }
 
     private myInsertHistory(word_id){
         let self = this;
-        self.database.execSQL("INSERT INTO HISTORY (word_id) VALUES (?)", [word_id]).then(word_insert => {
+        self.database.execSQL("INSERT INTO HISTORY (dict_no,dict_search) VALUES (?,?)", [word_id,self.word.dict_search]).then(word_insert => {
                 console.log("INSERT RESULT => " , word_insert  );
                 }, error => {
                     console.log("INSERT ERROR => " , error);
