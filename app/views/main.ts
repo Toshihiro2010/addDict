@@ -264,7 +264,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
      
         if(self.db_file_check != 0 ){
             self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 LIMit 10").then(rows =>{
-                //console.log(rows);
+                //console.log(rows)
                 self.word_list = rows;
                 self.refeshList();
                 self.pushList(rows);

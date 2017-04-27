@@ -40,8 +40,6 @@ export class ListDetailComponent extends Observable implements OnInit {
         console.log(self.word.dict_meaning);
      
         
-        self.favorite = 0;; // ให้ favorite
-        
         /*let temp = self.word.wordType;
         self.word.wordType = self.changWordType(temp);
         console.log(self.word.wordType);*/
@@ -64,7 +62,19 @@ export class ListDetailComponent extends Observable implements OnInit {
 
     ngOnInit(){
         let self = this;
+        let word_id = self.word.id;
         self.myHistory();
+        self.database.all("SELECT * FROM FAVORITE WHERE dict_no = (?)",[word_id]).then(rows =>{
+            if(rows ==""){
+                self.favorite = 0;
+            }else{
+                self.favorite = 1;
+            }
+        },error =>{
+            console.log("SELECT ERROR " , error);
+        })
+
+        
     }
 
     myFavorite(){
@@ -117,6 +127,7 @@ export class ListDetailComponent extends Observable implements OnInit {
         let self = this;
         self.database.execSQL("INSERT INTO FAVORITE (dict_no) VALUES (?)", [word_id]).then(word_insert => {
                 console.log("INSERT RESULT => " , word_insert  );
+                self.favorite =1;
                 }, error => {
                     console.log("INSERT ERROR => " , error);
                 }
@@ -128,7 +139,7 @@ export class ListDetailComponent extends Observable implements OnInit {
         let self = this;
         self.database.execSQL("DELETE FROM FAVORITE WHERE dict_no = (?)", [word_id]).then(word_delete => {
             console.log("DELETE RESULT => " , word_delete  );
-            self.myInsertFavorite(word_id);
+            self.favorite = 0;
             }, error => {
                 console.log("DELETE ERROR => " , error);
             }
@@ -247,7 +258,7 @@ export class ListDetailComponent extends Observable implements OnInit {
 
         let documents = fs.knownFolders.documents();
         let my_path = documents.getFolder("mySound");
-        var filePath = fs.path.join(my_path.path, "test.mp3");
+        var filePath = fs.path.join(my_path.path, "sound.mp3");
 
         http.getFile({ url: self.url,
                     method: "GET",
