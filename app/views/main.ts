@@ -300,13 +300,13 @@ export class ViewComponent implements OnInit , AfterViewInit {
             }
 
     }
-
+    // FAVORiTE AND HISTORY NO USE
     getItemFavorite(){
         let self = this;
         self.viewCheck = 1;
 
 
-        let strSQL = "SELECT * FROM FAVORITE";
+        let strSQL = "SELECT word_id FROM FAVORITE";
         self.database.all(strSQL).then(result => {
             self.word_sql = result;
             self.refeshList();
@@ -340,7 +340,7 @@ export class ViewComponent implements OnInit , AfterViewInit {
         let self = this;
         self.viewCheck = 0 ;
         self.refeshList();
-        self.database.all("SELECT * FROM dict ORDER BY RANDOM() LIMIT 1").then(rows =>{
+        self.my_db.all("SELECT dict_no , dict_search , dict_meaning FROM words WHERE dict_no > 400 ORDER BY RANDOM() LIMIT 1").then(rows =>{
             console.log(rows);
             
             console.log("eng_word ==> " , rows[0][1]); // result eng
